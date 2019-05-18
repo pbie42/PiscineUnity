@@ -35,7 +35,6 @@ public class CubeSpawner : MonoBehaviour
 	void Update()
 	{
 		_spawnTimer -= Time.deltaTime;
-
 		if (_spawnTimer <= 0 && NeedCube())
 		{
 			_spawnTimer = 0.6f;
@@ -59,7 +58,7 @@ public class CubeSpawner : MonoBehaviour
 		GameObject foundObject = GameObject.Find(keys[key]);
 		if (foundObject && foundObject.transform.position.y > _distanceMaxInUnits)
 		{
-			Debug.Log(CalcPrecision(foundObject));
+			Debug.Log("Precision: " + CalcPrecision(foundObject));
 			Destroy(foundObject);
 		}
 	}
