@@ -42,6 +42,24 @@ public class CubeSpawner : MonoBehaviour
 			_spawnTimer = 0.6f;
 			SpawnCube();
 		}
+		HandleKeyPress();
+	}
+
+	private void HandleKeyPress()
+	{
+		if (Input.GetKeyDown(KeyCode.A))
+			DestroyCube(0);
+		if (Input.GetKeyDown(KeyCode.S))
+			DestroyCube(1);
+		if (Input.GetKeyDown(KeyCode.D))
+			DestroyCube(2);
+	}
+
+	private void DestroyCube(int key)
+	{
+		GameObject foundObject = GameObject.Find(keys[key]);
+		if (foundObject && foundObject.transform.position.y > -5)
+			Destroy(foundObject);
 	}
 
 	private bool NeedCube()
