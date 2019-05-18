@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-	public GameObject[] spawnees;
-	private string[] keys = { "a(Clone)", "s(Clone)", "d(Clone)" };
 	private bool _gameStarted = false;
 	private float _spawnTimer = 0.6f;
+	private int _distanceMaxInUnits = -6;
+	private int _lineUnitDistance = 10;
+	private string[] keys = { "a(Clone)", "s(Clone)", "d(Clone)" };
+	public GameObject[] spawnees;
+
 
 	private void Start()
 	{
@@ -20,16 +23,12 @@ public class CubeSpawner : MonoBehaviour
 		int chosen = 0;
 		while (found)
 		{
-			Debug.Log("We in here");
 			chosen = Random.Range(0, spawnees.Length);
 			GameObject foundObject = GameObject.Find(keys[chosen]);
-			if (foundObject)
-				Debug.Log("name: " + foundObject.name);
 			if (!foundObject)
 				found = false;
 		}
 		GameObject cube = Instantiate(spawnees[chosen]) as GameObject;
-		Debug.Log("Cube Name " + cube.name);
 	}
 
 	// Update is called once per frame
@@ -58,8 +57,24 @@ public class CubeSpawner : MonoBehaviour
 	private void DestroyCube(int key)
 	{
 		GameObject foundObject = GameObject.Find(keys[key]);
-		if (foundObject && foundObject.transform.position.y > -5)
+		if (foundObject && foundObject.transform.position.y > _distanceMaxInUnits)
+		{
+			Debug.Log(CalcPrecision(foundObject));
 			Destroy(foundObject);
+		}
+	}
+
+	private float CalcPrecision(GameObject foundObject)
+	{
+		float position = 0;
+		float distancePixels = (Screen.height - (Screen.height * 0.2f));
+		float yPos = foundObject.transform.position.y;
+		if (yPos < 0)
+			position = 5 + (yPos * -1);
+		else
+			position = yPos;
+		float absolutePosition = _lineUnitDistance - position < 0 ? (_lineUnitDistance - position) * -1 : _lineUnitDistance - position;
+		return ((absolutePosition * 0.1f) * distancePixels);
 	}
 
 	private bool NeedCube()

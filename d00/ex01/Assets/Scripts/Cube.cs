@@ -7,7 +7,7 @@ public class Cube : MonoBehaviour
 	private Vector3 _speed;
 	private float _maxSpeed = 0.15f;
 	private float _minSpeed = 0.05f;
-	private int _destroyLocation = -6;
+	private int _destroyLocation = -7;
 
 	// Use this for initialization
 	void Start()
