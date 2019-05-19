@@ -11,12 +11,13 @@ public class Club : MonoBehaviour
 	private bool _gameOver = false;
 	private bool _up = true;
 	private float _border = 5.5f;
-	private float _holeTop = 4.25f;
-	private float _holeBottom = 3.75f;
 	private float _diminishPower = 0.005f;
+	private float _holeBottom = 3.75f;
+	private float _holeTop = 4.25f;
 	private float _power = 0.0f;
 	private float _powerIncrease = 0.01f;
 	private int _holePos = 4;
+	private int _score = -15;
 	private Vector3 _clubMovement = new Vector3(0f, 0.05f, 0);
 	private Vector3 _currentPos;
 
@@ -47,7 +48,7 @@ public class Club : MonoBehaviour
 	private void HandleMovement()
 	{
 		_ballMoving = true;
-		_power = MoveBall();
+		_power = BallMove(_power);
 		float ballPosY = ball.transform.position.y;
 		if (ballPosY <= _holeTop && ballPosY >= _holeBottom && _power <= 0.1f)
 			GameOver();
@@ -59,17 +60,14 @@ public class Club : MonoBehaviour
 		_clubMoving = false;
 		_ballMoving = false;
 		RepositionClub();
+		_score += 5;
+		Debug.Log("Score: " + _score);
 	}
 
 	private void GameOver()
 	{
 		_gameOver = true;
 		ball.transform.position += new Vector3(0, 0, 5);
-	}
-
-	private float MoveBall()
-	{
-		return BallMove(_power);
 	}
 
 	private void MoveClub()
