@@ -5,13 +5,13 @@ using UnityEngine;
 public class PongBall : MonoBehaviour
 {
 	[SerializeField] Player[] players;
-	private Vector3 _ballStartPos;
-	private Vector3 _ballSpeedRight = new Vector3(0.1f, 0, 0);
-	private Vector3 _ballSpeedUp = new Vector3(0, 0.1f, 0);
-	private float _border = 5.3f;
-	private float _goal = 8f;
 	private bool _ballRight = true;
 	private bool _ballUp = true;
+	private float _border = 5.3f;
+	private float _goal = 8f;
+	private Vector3 _ballSpeedRight = new Vector3(0.1f, 0, 0);
+	private Vector3 _ballSpeedUp = new Vector3(0, 0.1f, 0);
+	private Vector3 _ballStartPos;
 
 	// Use this for initialization
 	void Start()

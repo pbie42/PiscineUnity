@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	private float _playerMax = 4.5f;
 	private float _diffX = 0.2f;
 	private float _diffY = 1f;
+	private float _playerMax = 4.5f;
 	private int _score = 0;
 	private Vector3 _playerSpeed = new Vector3(0, 0.3f, 0);
 	// Use this for initialization
