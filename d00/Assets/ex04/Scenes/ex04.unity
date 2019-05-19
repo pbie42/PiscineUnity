@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 47995909}
   - component: {fileID: 47995908}
+  - component: {fileID: 47995910}
   m_Layer: 0
   m_Name: Paddle Left
   m_TagString: Untagged
@@ -180,12 +181,23 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 47995907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.83, y: 0, z: 0}
-  m_LocalScale: {x: 0.33374786, y: 2.6101105, z: 1}
+  m_LocalPosition: {x: -7.83, y: 0.019, z: 0}
+  m_LocalScale: {x: 0.33374786, y: 1.9804338, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &47995910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 47995907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c22c6849c7884108be4ca97a2dee55b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &247772842
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 506048282}
   - component: {fileID: 506048281}
+  - component: {fileID: 506048283}
   m_Layer: 0
   m_Name: Paddle Right
   m_TagString: Untagged
@@ -507,12 +520,23 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 506048280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.83, y: 0, z: 0}
-  m_LocalScale: {x: 0.33374786, y: 2.6101105, z: 1}
+  m_LocalPosition: {x: 7.83, y: 0.018, z: 0}
+  m_LocalScale: {x: 0.33374786, y: 2.017474, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &506048283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 506048280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c22c6849c7884108be4ca97a2dee55b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &593619407
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,8 +546,9 @@ GameObject:
   m_Component:
   - component: {fileID: 593619409}
   - component: {fileID: 593619408}
+  - component: {fileID: 593619410}
   m_Layer: 0
-  m_Name: cube
+  m_Name: PongBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -586,6 +611,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &593619410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 593619407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2583cb0df1f09421d85c750805f4f021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - {fileID: 47995910}
+  - {fileID: 506048283}
 --- !u!1 &601888501
 GameObject:
   m_ObjectHideFlags: 0
