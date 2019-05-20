@@ -65,19 +65,6 @@ public class playerScript_ex01 : MonoBehaviour
 		CheckEnd();
 	}
 
-	private void CheckEnd()
-	{
-		float playerX = gameObject.transform.position.x;
-		float playerY = gameObject.transform.position.y;
-		float endX = gameObject.transform.position.x;
-		float endY = gameObject.transform.position.y;
-		if (playerX <= endX + _endDiff && playerX >= endX - _endDiff
-			&& playerY <= endY + _endDiff && playerY >= endY - _endDiff)
-			_inEndPos = true;
-		else
-			_inEndPos = false;
-	}
-
 	private void Jump()
 	{
 		if (gameObject.tag == "Claire")
@@ -89,9 +76,17 @@ public class playerScript_ex01 : MonoBehaviour
 		_grounded = false;
 	}
 
-	private void OnCollisionExit2D(Collision2D other)
+	private void CheckEnd()
 	{
-		Debug.Log("Leaving");
+		float playerX = gameObject.transform.position.x;
+		float playerY = gameObject.transform.position.y;
+		float endX = _end.transform.position.x;
+		float endY = _end.transform.position.y;
+		if (playerX <= endX + _endDiff && playerX >= endX - _endDiff
+			&& playerY <= endY + _endDiff && playerY >= endY - _endDiff)
+			_inEndPos = true;
+		else
+			_inEndPos = false;
 	}
 
 	private void OnCollisionEnter2D(Collision2D other)
