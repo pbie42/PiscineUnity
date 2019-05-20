@@ -9,44 +9,44 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1433924428526616}
+  m_RootGameObject: {fileID: 1486079387019042}
   m_IsPrefabParent: 1
---- !u!1 &1433924428526616
+--- !u!1 &1486079387019042
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4024893874002910}
-  - component: {fileID: 212832398421289792}
-  - component: {fileID: 61365204511029828}
-  m_Layer: 11
-  m_Name: Thomas Horizontal
+  - component: {fileID: 4234183090543184}
+  - component: {fileID: 212185742582575490}
+  - component: {fileID: 61281989711117398}
+  m_Layer: 12
+  m_Name: Claire Horizontal
   m_TagString: Bottom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4024893874002910
+--- !u!4 &4234183090543184
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1433924428526616}
+  m_GameObject: {fileID: 1486079387019042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.102095485}
-  m_LocalScale: {x: 1.506909, y: 0.16436692, z: 1}
+  m_LocalScale: {x: 1.50691, y: 0.16437, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61365204511029828
+--- !u!61 &61281989711117398
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1433924428526616}
+  m_GameObject: {fileID: 1486079387019042}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -66,12 +66,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 0.625}
   m_EdgeRadius: 0
---- !u!212 &212832398421289792
+--- !u!212 &212185742582575490
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1433924428526616}
+  m_GameObject: {fileID: 1486079387019042}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -101,7 +101,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c0fb2338576246749bbd0b6e893aee8e, type: 3}
-  m_Color: {r: 0.83921576, g: 0.27058825, b: 0.25882354, a: 1}
+  m_Color: {r: 0.14509805, g: 0.2392157, b: 0.37254903, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
