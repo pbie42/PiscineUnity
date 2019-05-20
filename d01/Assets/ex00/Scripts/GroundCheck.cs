@@ -19,12 +19,11 @@ public class GroundCheck : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log("Ground Check hit something");
-		Player.IsGrounded(true);
+
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		Player.IsGrounded(false);
+
 	}
 }

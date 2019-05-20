@@ -34,6 +34,16 @@ public class Camera : MonoBehaviour
 			ChangeFocus(John);
 		if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
 			ChangeFocus(Claire);
+		if (Input.GetKeyDown(KeyCode.Backspace))
+			ResetScene();
+	}
+
+	private void ResetScene()
+	{
+		Thomas.ResetPos();
+		John.ResetPos();
+		Claire.ResetPos();
+		ChangeFocus(Thomas);
 	}
 
 	private void ChangeFocus(playerScript_ex00 player)

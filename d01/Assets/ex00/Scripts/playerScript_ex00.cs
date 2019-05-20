@@ -12,10 +12,12 @@ public class playerScript_ex00 : MonoBehaviour
 	private float _medJump = 450f;
 	private float _forceX = 0.1f;
 	private Rigidbody2D _rgbd;
+	private Vector3 _startPos;
 
 	// Use this for initialization
 	void Start()
 	{
+		_startPos = gameObject.transform.position;
 		_rgbd = GetComponent<Rigidbody2D>();
 	}
 
@@ -69,5 +71,10 @@ public class playerScript_ex00 : MonoBehaviour
 	public void IsGrounded(bool grounded)
 	{
 		_grounded = grounded;
+	}
+
+	public void ResetPos()
+	{
+		gameObject.transform.position = _startPos;
 	}
 }
