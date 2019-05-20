@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Low
+  - Med
+  - High
+  - Bottom
+  - Thomas
+  - John
+  - Claire
   layers:
   - Default
   - TransparentFX
@@ -13,7 +20,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Ground Check
   - 
   - 
   - 
