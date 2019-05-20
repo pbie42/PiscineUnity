@@ -14,7 +14,7 @@ public class playerScript_ex01 : MonoBehaviour
 	private float _lowSpeed = 0.05f;
 	private float _medSpeed = 0.1f;
 	private float _highSpeed = 0.15f;
-	private float _endDiff = 0.1f;
+	private float _endDiff = 0.2f;
 	private Rigidbody2D _rgbd;
 	private Vector3 _startPos;
 	public GameObject _end;

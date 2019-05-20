@@ -30,7 +30,11 @@ public class Camera_ex01 : MonoBehaviour
 	private void CheckEnd()
 	{
 		if (Thomas.IsInEnd() && Claire.IsInEnd() && John.IsInEnd())
+		{
 			Debug.Log("You've Won!");
+			int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+			UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex + 1);
+		}
 	}
 
 	private void CheckChange()
