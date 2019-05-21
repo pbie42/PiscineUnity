@@ -11,6 +11,7 @@ TagManager:
   - Thomas
   - John
   - Claire
+  - Button
   layers:
   - Default
   - TransparentFX
