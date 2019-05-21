@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonDisappear : MonoBehaviour
+public class ButtonAppear : MonoBehaviour
 {
 	public GameObject[] Objects;
 
@@ -20,14 +20,14 @@ public class ButtonDisappear : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		ObjectsDisappear();
+		ObjectsAppear();
 	}
 
-	private void ObjectsDisappear()
+	private void ObjectsAppear()
 	{
 		for (int i = 0; i < Objects.Length; i++)
 		{
-			Objects[i].SetActive(false);
+			Objects[i].SetActive(true);
 		}
 	}
 }

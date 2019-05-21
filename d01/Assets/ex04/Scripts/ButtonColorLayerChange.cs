@@ -7,6 +7,7 @@ public class ButtonColorLayerChange : MonoBehaviour
 
 	public GameObject[] Objects;
 	private SpriteRenderer _spriteRenderer;
+	private bool _changed = false;
 
 	// Use this for initialization
 	void Start()
@@ -22,8 +23,12 @@ public class ButtonColorLayerChange : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		ChangeColors(other.gameObject);
-		ChangeColorsOfObjects(other.gameObject.name);
+		if (!_changed)
+		{
+			ChangeColors(other.gameObject);
+			ChangeColorsOfObjects(other.gameObject.name);
+			_changed = true;
+		}
 	}
 
 	private void ChangeColors(GameObject obj)
@@ -51,7 +56,9 @@ public class ButtonColorLayerChange : MonoBehaviour
 			if (objSprite)
 			{
 				objSprite.color = GetColor(name);
+				Debug.Log("getlayer " + GetLayer(name));
 				Objects[i].layer = GetLayer(name);
+				gameObject.layer = GetLayer(name);
 			}
 		}
 	}

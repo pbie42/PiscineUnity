@@ -97,7 +97,7 @@ public class playerScript_ex01 : MonoBehaviour
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		string tag = other.gameObject.tag;
-		if (tag == "Bottom" || tag == "Thomas" || tag == "John" || tag == "Claire")
+		if (tag == "Bottom" || tag == "Thomas" || tag == "John" || tag == "Claire" || tag == "Button")
 			_grounded = true;
 	}
 
