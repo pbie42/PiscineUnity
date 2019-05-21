@@ -8,8 +8,8 @@ public class Balloon : MonoBehaviour
 	private bool _coolDown = false;
 	private bool _gameStarted = false;
 	private float _coolDownTimer = 0.0f;
-	private float _descale = 0.001f;
-	private float _gameOverScaleMaxX = 4.0f;
+	private float _descale = 0.003f;
+	private float _gameOverScaleMaxX = 2.0f;
 	private float _gameOverScaleMinX = 0.0f;
 	private float _gameOverTime = 5.0f;
 	private float _gameOverTimer = 0.0f;
@@ -68,7 +68,6 @@ public class Balloon : MonoBehaviour
 
 	private void GameOver()
 	{
-		Debug.Log("Game Over");
 		Debug.Log("Balloon life time: " + Mathf.RoundToInt(_timer) + 's');
 		Destroy(gameObject);
 	}
