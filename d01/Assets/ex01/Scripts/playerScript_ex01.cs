@@ -78,7 +78,6 @@ public class playerScript_ex01 : MonoBehaviour
 			_rgbd.AddForce(new Vector2(0, _medJump));
 		else if (gameObject.tag == "John")
 			_rgbd.AddForce(new Vector2(0, _highJump));
-		_grounded = false;
 	}
 
 	private void CheckEnd()
@@ -99,6 +98,11 @@ public class playerScript_ex01 : MonoBehaviour
 		string tag = other.gameObject.tag;
 		if (tag == "Bottom" || tag == "Thomas" || tag == "John" || tag == "Claire")
 			_grounded = true;
+	}
+
+	private void OnCollisionExit2D(Collision2D other)
+	{
+		_grounded = false;
 	}
 
 	public void EnterFocus()

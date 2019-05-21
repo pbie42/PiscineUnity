@@ -8,7 +8,7 @@ public class PlatformHorizontal : MonoBehaviour
 	public float MoveStartX;
 	private float _movedX = 0.0f;
 	private bool _moveRight = true;
-	private float _waitTimer = 5f;
+	private float _waitTimer = 3f;
 	private Vector3 _moveSpeed = new Vector3(0.04f, 0, 0);
 
 	// Use this for initialization
