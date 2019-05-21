@@ -14,7 +14,7 @@ public class playerScript_ex01 : MonoBehaviour
 	private float _lowSpeed = 0.05f;
 	private float _medSpeed = 0.1f;
 	private float _highSpeed = 0.15f;
-	private float _endDiff = 0.2f;
+	private float _endDiff = 0.3f;
 	private Rigidbody2D _rgbd;
 	private Vector3 _startPos;
 	public GameObject _end;
@@ -78,6 +78,7 @@ public class playerScript_ex01 : MonoBehaviour
 			_rgbd.AddForce(new Vector2(0, _medJump));
 		else if (gameObject.tag == "John")
 			_rgbd.AddForce(new Vector2(0, _highJump));
+		_grounded = false;
 	}
 
 	private void CheckEnd()
@@ -102,7 +103,7 @@ public class playerScript_ex01 : MonoBehaviour
 
 	private void OnCollisionExit2D(Collision2D other)
 	{
-		_grounded = false;
+
 	}
 
 	public void EnterFocus()
