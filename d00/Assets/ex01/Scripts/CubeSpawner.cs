@@ -10,10 +10,12 @@ public class CubeSpawner : MonoBehaviour
 	private int _lineUnitDistance = 10;
 	private string[] keys = { "a(Clone)", "s(Clone)", "d(Clone)" };
 	public GameObject[] spawnees;
+	private GameObject[] spawned;
 
 
 	private void Start()
 	{
+		spawned = new GameObject[3];
 		SpawnCube();
 	}
 
@@ -24,11 +26,24 @@ public class CubeSpawner : MonoBehaviour
 		while (found)
 		{
 			chosen = Random.Range(0, spawnees.Length);
-			GameObject foundObject = GameObject.Find(keys[chosen]);
+			GameObject foundObject = FindSpawnee(chosen);
 			if (!foundObject)
 				found = false;
 		}
 		GameObject cube = Instantiate(spawnees[chosen]) as GameObject;
+		cube.tag = keys[chosen];
+		if (!spawned[chosen])
+			spawned[chosen] = cube;
+	}
+
+	private GameObject FindSpawnee(int chosen)
+	{
+		for (int i = 0; i < spawned.Length; i++)
+		{
+			if (spawned[i] && spawned[i].tag == keys[chosen])
+				return spawned[i];
+		}
+		return null;
 	}
 
 	// Update is called once per frame
@@ -55,7 +70,7 @@ public class CubeSpawner : MonoBehaviour
 
 	private void DestroyCube(int key)
 	{
-		GameObject foundObject = GameObject.Find(keys[key]);
+		GameObject foundObject = FindSpawnee(key);
 		if (foundObject && foundObject.transform.position.y > _distanceMaxInUnits)
 		{
 			Debug.Log("Precision: " + CalcPrecision(foundObject));
