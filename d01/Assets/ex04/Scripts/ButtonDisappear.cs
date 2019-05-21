@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button : MonoBehaviour
+public class ButtonDisappear : MonoBehaviour
 {
+	public GameObject[] Objects;
 
 	// Use this for initialization
 	void Start()
@@ -19,6 +20,14 @@ public class Button : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
+		CloseDoor();
+	}
 
+	private void CloseDoor()
+	{
+		for (int i = 0; i < Objects.Length; i++)
+		{
+			Objects[i].SetActive(false);
+		}
 	}
 }
