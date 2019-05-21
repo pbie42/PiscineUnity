@@ -64,14 +64,12 @@ public class PongBall : MonoBehaviour
 	private void CheckBorderCollision()
 	{
 		float ballY = gameObject.transform.position.y;
-		float ballX = gameObject.transform.position.x;
 		if (ballY >= _border || ballY <= -_border)
 			_ballUp = !_ballUp;
 	}
 
 	private void CheckGoalCollision()
 	{
-		float ballY = gameObject.transform.position.y;
 		float ballX = gameObject.transform.position.x;
 		if (ballX >= _goal)
 		{

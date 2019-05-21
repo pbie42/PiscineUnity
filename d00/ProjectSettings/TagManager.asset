@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - a(Clone)
+  - s(Clone)
+  - d(Clone)
   layers:
   - Default
   - TransparentFX

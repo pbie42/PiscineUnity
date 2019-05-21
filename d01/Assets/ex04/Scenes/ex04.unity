@@ -123,7 +123,6 @@ GameObject:
   m_Component:
   - component: {fileID: 35697525}
   - component: {fileID: 35697524}
-  - component: {fileID: 35697523}
   - component: {fileID: 35697522}
   - component: {fileID: 35697521}
   m_Layer: 12
@@ -173,19 +172,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.29475844, y: 0.27886587}
   m_EdgeRadius: 0
---- !u!114 &35697523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114988290982605852, guid: 08329488f4543481ca8b42fcec710797,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 35697520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9e50fa1b64c4587a66097e2b32176e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Door: {fileID: 0}
 --- !u!212 &35697524
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -724,8 +710,8 @@ Transform:
   - {fileID: 1368320687}
   - {fileID: 1226920064}
   - {fileID: 1223033270}
-  - {fileID: 1341420735}
   - {fileID: 2128728216}
+  - {fileID: 1341420735}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1393,7 +1379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1028175535}
   - component: {fileID: 1028175534}
-  - component: {fileID: 1028175533}
   - component: {fileID: 1028175532}
   - component: {fileID: 1028175531}
   m_Layer: 12
@@ -1442,19 +1427,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.29475844, y: 0.27886587}
   m_EdgeRadius: 0
---- !u!114 &1028175533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114988290982605852, guid: 08329488f4543481ca8b42fcec710797,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1028175530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9e50fa1b64c4587a66097e2b32176e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Door: {fileID: 0}
 --- !u!212 &1028175534
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1554,7 +1526,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114201584224759912, guid: 10dd6af19958440af8dde57847e81cdb, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 10dd6af19958440af8dde57847e81cdb, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1051496764

@@ -12,6 +12,8 @@
 
 **/.DS_Store
 
+Temp
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 

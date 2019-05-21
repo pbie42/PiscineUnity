@@ -39,7 +39,9 @@ public class Camera_ex01 : MonoBehaviour
 		if (Thomas.transform.position.y <= _deathY
 			|| Claire.transform.position.y <= _deathY
 			|| John.transform.position.y <= _deathY)
+		{
 			ResetScene();
+		}
 	}
 
 	private void CheckChange()
@@ -56,10 +58,12 @@ public class Camera_ex01 : MonoBehaviour
 
 	private void ResetScene()
 	{
-		Thomas.ResetPos();
-		John.ResetPos();
-		Claire.ResetPos();
-		ChangeFocus(Thomas);
+		// Thomas.ResetPos();
+		// John.ResetPos();
+		// Claire.ResetPos();
+		// ChangeFocus(Thomas);
+		int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+		UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex);
 	}
 
 	private void ChangeFocus(playerScript_ex01 player)
