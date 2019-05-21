@@ -9,6 +9,7 @@ public class Camera_ex01 : MonoBehaviour
 	public playerScript_ex01 John;
 	public playerScript_ex01 Claire;
 	private playerScript_ex01 _currentCharacter;
+	private float _deathY = -30f;
 
 	// Use this for initialization
 	void Start()
@@ -35,6 +36,10 @@ public class Camera_ex01 : MonoBehaviour
 			int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
 			UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex + 1);
 		}
+		if (Thomas.transform.position.y <= _deathY
+			|| Claire.transform.position.y <= _deathY
+			|| John.transform.position.y <= _deathY)
+			ResetScene();
 	}
 
 	private void CheckChange()

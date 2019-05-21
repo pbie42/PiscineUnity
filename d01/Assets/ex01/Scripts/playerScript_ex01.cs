@@ -35,6 +35,11 @@ public class playerScript_ex01 : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.Space) && _grounded)
 				Jump();
 		}
+		CheckFall();
+	}
+
+	private void CheckFall()
+	{
 	}
 
 	private void Move()

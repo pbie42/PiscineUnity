@@ -654,7 +654,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -746,7 +746,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5a08886148249258b04f7cd4946402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDistanceX: 19
+  MoveEndX: 9.5
+  MoveStartX: -9.5
 --- !u!4 &1690654594 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4187131714965306, guid: adab7d091ea774ac1a5127a189e38e49,
