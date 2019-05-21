@@ -93,9 +93,9 @@ public class CubeSpawner : MonoBehaviour
 
 	private bool NeedCube()
 	{
-		GameObject a = GameObject.Find(keys[0]);
-		GameObject s = GameObject.Find(keys[1]);
-		GameObject d = GameObject.Find(keys[2]);
+		GameObject a = FindSpawnee(0);
+		GameObject s = FindSpawnee(1);
+		GameObject d = FindSpawnee(2);
 		if (!a || !s || !d)
 			return true;
 		return false;
