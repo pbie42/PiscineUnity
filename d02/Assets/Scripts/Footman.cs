@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Footman : MonoBehaviour
 {
-	private AudioSource[] _audioSources;
+	private AudioSource _audioSources;
 	private bool _selected = false;
+
+	public AudioClip[] _selectedSounds;
 
 	// Use this for initialization
 	void Start()
 	{
-		_audioSources = GetComponents<AudioSource>();
+		_audioSources = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -19,17 +21,15 @@ public class Footman : MonoBehaviour
 
 	}
 
-	private void OnMouseDown()
-	{
-		Debug.Log("Mouse down on Footman");
-		_audioSources[0].Play();
-		_selected = true;
-	}
+	// private void OnMouseDown()
+	// {
+	// 	_audioSources[0].Play();
+	// 	_selected = true;
+	// }
 
-	private void OnMouseUp()
-	{
-		Debug.Log("Mouse up on Footman");
-	}
+	// private void OnMouseUp()
+	// {
+	// }
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
@@ -44,6 +44,23 @@ public class Footman : MonoBehaviour
 	public void Deselect()
 	{
 		_selected = false;
+	}
+
+	public void Select()
+	{
+		int selectedSound = Random.Range(0, _selectedSounds.Length - 1);
+		_audioSources.PlayOneShot(_selectedSounds[selectedSound]);
+		_selected = true;
+	}
+
+	public bool IsSelected()
+	{
+		return _selected;
+	}
+
+	public void Move()
+	{
+
 	}
 
 

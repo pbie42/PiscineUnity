@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 673314158}
   m_Layer: 0
   m_Name: Footman
-  m_TagString: Untagged
+  m_TagString: Footman
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
