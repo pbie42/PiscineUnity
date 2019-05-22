@@ -11,6 +11,11 @@ public class Camera_ex01 : MonoBehaviour
 	private playerScript_ex01 _currentCharacter;
 	private float _deathY = -30f;
 
+	private bool _thomas = false;
+	private bool _john = false;
+	private bool _claire = false;
+
+
 	// Use this for initialization
 	void Start()
 	{
@@ -30,6 +35,22 @@ public class Camera_ex01 : MonoBehaviour
 
 	private void CheckEnd()
 	{
+		if (!_thomas && Thomas.IsInEnd())
+		{
+			Debug.Log("Thomas is in");
+			_thomas = true;
+		}
+		if (!_claire && Claire.IsInEnd())
+		{
+			Debug.Log("Claire is in");
+			_claire = true;
+		}
+		if (!_john && John.IsInEnd())
+		{
+			Debug.Log("John is in");
+			_john = true;
+		}
+
 		if (Thomas.IsInEnd() && Claire.IsInEnd() && John.IsInEnd())
 		{
 			Debug.Log("You've Won!");

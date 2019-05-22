@@ -543,7 +543,7 @@ Prefab:
         type: 2}
       propertyPath: _end
       value: 
-      objectReference: {fileID: 1338784470}
+      objectReference: {fileID: 1515683947}
     - target: {fileID: 61691989098645910, guid: 3a81c604a5af44bb9a16e7397e415433,
         type: 2}
       propertyPath: m_Offset.y
@@ -889,11 +889,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4402211544930720, guid: 699ecab3d3b0f42c2bbdd81a3ab1c28b,
     type: 2}
   m_PrefabInternal: {fileID: 1275679310}
---- !u!1 &1338784470 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1756060441838236, guid: 3a81c604a5af44bb9a16e7397e415433,
-    type: 2}
-  m_PrefabInternal: {fileID: 767622651}
 --- !u!1001 &1428904014
 Prefab:
   m_ObjectHideFlags: 0
@@ -1225,6 +1220,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d3c771b26c0c2490fa78418e48d7643f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1515683947 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1723663498897528, guid: d3c771b26c0c2490fa78418e48d7643f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1515683946}
 --- !u!1001 &1590439331
 Prefab:
   m_ObjectHideFlags: 0
