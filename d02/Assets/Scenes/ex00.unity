@@ -243,6 +243,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4b6aafa691c4230a849b3ca6289cbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectedSounds:
+  - {fileID: 8300000, guid: 4b8134fc51b37463781fee040bac09ae, type: 3}
+  - {fileID: 8300000, guid: f5425f99d69df4cb980b9eddf4410905, type: 3}
+  - {fileID: 8300000, guid: 0d8d3b36430cf4d50b24fbb6e29fb1ca, type: 3}
+  - {fileID: 8300000, guid: 8dd72f0aa638d42df851b5dc733cd05b, type: 3}
+  - {fileID: 8300000, guid: 0d34fc58d4d934c90affab216fbf4861, type: 3}
+  - {fileID: 8300000, guid: 3f614a96511694b168d73f9145f7cc6e, type: 3}
 --- !u!82 &673314158
 AudioSource:
   m_ObjectHideFlags: 0

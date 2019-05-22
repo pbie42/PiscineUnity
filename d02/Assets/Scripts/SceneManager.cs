@@ -25,7 +25,7 @@ public class SceneManager : MonoBehaviour
 			SelectFootman(mousePos);
 			// MoveOrder(mousePos);
 		}
-		if (Input.GetMouseButtonDown(0) && _selectedFootmen.Count > 0)
+		else if (Input.GetMouseButtonDown(0) && _selectedFootmen.Count > 0)
 		{
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			MoveOrder(mousePos);
@@ -52,12 +52,8 @@ public class SceneManager : MonoBehaviour
 
 	private void MoveFootman(Vector3 mousePos)
 	{
+		foreach (Footman footman in _selectedFootmen)
+			if (footman.IsSelected())
+				footman.MoveOrdered(mousePos);
 	}
-
-	// private void FindSelectedFootman()
-	// {
-	// 	foreach (Footman footman in _footmen)
-	// 		if (footman.IsSelected())
-	// 			_selectedFootmen.Add(footman);
-	// }
 }
