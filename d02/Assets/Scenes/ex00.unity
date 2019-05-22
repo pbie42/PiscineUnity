@@ -225,6 +225,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1348166254}
   - component: {fileID: 1348166253}
+  - component: {fileID: 1348166255}
+  - component: {fileID: 1348166256}
   m_Layer: 0
   m_Name: TownHall
   m_TagString: Untagged
@@ -289,6 +291,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1348166255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1348166252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a3123bf9ba54aafbb1b4041e26d80e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footman: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
+--- !u!114 &1348166256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1348166252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1469ead7b78d74b4594654c85e2ba3ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1432673068
 GameObject:
   m_ObjectHideFlags: 0
