@@ -38,8 +38,8 @@ public class SceneManager : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				Debug.Log("mouse button down");
 				Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				Debug.Log("mousePos " + mousePos);
 				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 				if (hit.collider != null)
 				{
