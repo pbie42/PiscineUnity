@@ -48,7 +48,6 @@ public class playerScript_ex00 : MonoBehaviour
 
 	private void OnCollisionExit2D(Collision2D other)
 	{
-		Debug.Log("Leaving");
 	}
 
 	private void OnCollisionEnter2D(Collision2D other)

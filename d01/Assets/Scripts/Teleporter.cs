@@ -21,11 +21,6 @@ public class Teleporter : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log("Triggered!");
-		Debug.Log("_end.transform.position: " + _end.transform.position);
-		Debug.Log("gameObject name: " + other.gameObject.name);
-		Debug.Log("other.gameObject.transform.position: " + other.gameObject.transform.position);
 		other.gameObject.transform.position = _end.transform.position;
-		Debug.Log("other.gameObject.transform.position: " + other.gameObject.transform.position);
 	}
 }

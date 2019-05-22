@@ -34,7 +34,11 @@ public class Camera_ex01 : MonoBehaviour
 		{
 			Debug.Log("You've Won!");
 			int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-			UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex + 1);
+			if (currentSceneIndex + 1 >= 4)
+				currentSceneIndex = 0;
+			else
+				currentSceneIndex += 1;
+			UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex);
 		}
 		if (Thomas.transform.position.y <= _deathY
 			|| Claire.transform.position.y <= _deathY
@@ -58,10 +62,6 @@ public class Camera_ex01 : MonoBehaviour
 
 	private void ResetScene()
 	{
-		// Thomas.ResetPos();
-		// John.ResetPos();
-		// Claire.ResetPos();
-		// ChangeFocus(Thomas);
 		int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
 		UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex);
 	}

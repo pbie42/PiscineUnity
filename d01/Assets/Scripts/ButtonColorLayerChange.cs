@@ -56,7 +56,6 @@ public class ButtonColorLayerChange : MonoBehaviour
 			if (objSprite)
 			{
 				objSprite.color = GetColor(name);
-				Debug.Log("getlayer " + GetLayer(name));
 				Objects[i].layer = GetLayer(name);
 				gameObject.layer = GetLayer(name);
 			}

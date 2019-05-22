@@ -14,7 +14,6 @@ public class PlatformHorizontal : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		Debug.Log("MoveDistanceX " + MoveEndX);
 		_movedX = MoveStartX;
 		if (MoveStartX < MoveEndX)
 			_moveRight = true;
