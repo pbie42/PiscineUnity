@@ -6,6 +6,7 @@ public class SceneManager : MonoBehaviour
 {
 	private List<Footman> _footmen;
 	private List<Footman> _selectedFootmen;
+	private bool _multipleSelected = false;
 
 	// Use this for initialization
 	void Start()
@@ -19,30 +20,52 @@ public class SceneManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(0) && _selectedFootmen.Count == 0)
+		if (Input.GetKey(KeyCode.LeftControl))
 		{
-			Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			SelectFootman(mousePos);
-			// MoveOrder(mousePos);
+			if (Input.GetMouseButtonDown(0))
+			{
+				Debug.Log("mouse button down with ctrl");
+				Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+				if (hit.collider != null)
+				{
+					_multipleSelected = true;
+					SelectFootman(hit);
+				}
+			}
 		}
-		else if (Input.GetMouseButtonDown(0) && _selectedFootmen.Count > 0)
+		else
 		{
-			Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			MoveOrder(mousePos);
+			if (Input.GetMouseButtonDown(0))
+			{
+				Debug.Log("mouse button down");
+				Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+				if (hit.collider != null)
+				{
+					ClearFootmen();
+					SelectFootman(hit);
+				}
+				else
+					MoveOrder(mousePos);
+			}
 		}
 	}
 
-	private void SelectFootman(Vector3 mousePos)
+	private void ClearFootmen()
 	{
-		RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-		if (hit.collider != null)
-		{
-			Debug.Log("hit" + hit.collider.gameObject.tag);
-			Footman _selectedFootman = hit.collider.GetComponent<Footman>();
-			_selectedFootman.Select();
-			_selectedFootmen.Add(_selectedFootman);
-			Debug.Log("_selectedFootmen.Count " + _selectedFootmen.Count);
-		}
+		foreach (Footman footman in _selectedFootmen)
+			footman.Deselect();
+		_selectedFootmen.Clear();
+	}
+
+	private void SelectFootman(RaycastHit2D hit)
+	{
+		Debug.Log("hit" + hit.collider.gameObject.tag);
+		Footman _selectedFootman = hit.collider.GetComponent<Footman>();
+		_selectedFootman.Select();
+		_selectedFootmen.Add(_selectedFootman);
+		Debug.Log("_selectedFootmen.Count " + _selectedFootmen.Count);
 	}
 
 	private void MoveOrder(Vector3 mousePos)

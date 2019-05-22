@@ -12,6 +12,7 @@ public class Footman : MonoBehaviour
 	private Vector3 _destination = Vector3.zero;
 	private SpriteRenderer _sprite;
 	private string _currentDir = "South";
+	private float _destOffset = 0.3f;
 
 	public AudioClip[] selectedSounds;
 	public AudioClip[] orderedSounds;
@@ -73,6 +74,7 @@ public class Footman : MonoBehaviour
 
 	public void MoveOrdered(Vector3 destination)
 	{
+		Debug.Log("gameObject.name " + gameObject.name);
 		OrderedSound();
 		_destination = new Vector3(destination.x, destination.y, transform.position.z);
 		_movement = _destination - transform.position;
@@ -145,7 +147,7 @@ public class Footman : MonoBehaviour
 		float destY = _destination.y;
 		float posX = transform.position.x;
 		float posY = transform.position.y;
-		if (Vector3.Distance(_destination, transform.position) < 0.1f)
+		if (Vector3.Distance(_destination, transform.position) < _destOffset)
 		{
 			_move = false;
 			animator.SetBool(_currentDir, false);
