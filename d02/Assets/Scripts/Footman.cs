@@ -16,6 +16,9 @@ public class Footman : MonoBehaviour
 	private string _currentDir = "South";
 	private Vector3 _destination = Vector3.zero;
 	private Vector3 _movement;
+	private float _attackTimer = 3.0f;
+	private float _attackTime = 3.0f;
+	private int _attackDamage = 25;
 
 	public AudioClip[] selectedSounds;
 	public AudioClip[] orderedSounds;
@@ -41,7 +44,22 @@ public class Footman : MonoBehaviour
 		}
 		if (_attack)
 		{
-			AttackEnemy();
+			if (_enemy)
+			{
+				_attackTimer -= Time.deltaTime;
+				if (_attackTimer <= 0)
+				{
+					_attackTimer = _attackTime;
+					DamageEnemy();
+				}
+				AttackEnemy();
+			}
+			else
+			{
+				_attack = false;
+				animator.SetBool("Attack", false);
+				animator.SetBool(_currentDir, false);
+			}
 		}
 
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -92,6 +110,8 @@ public class Footman : MonoBehaviour
 		_movement = _destination - transform.position;
 		_movement = _movement.normalized;
 		_move = true;
+		_attack = false;
+		animator.SetBool("Attack", false);
 		animator.SetBool(_currentDir, false);
 	}
 
@@ -103,6 +123,15 @@ public class Footman : MonoBehaviour
 		Debug.Log("_move: " + _move);
 		animator.SetBool("Move", false);
 		CalculateAnimation();
+	}
+
+	private void DamageEnemy()
+	{
+		if (_enemy.tag == "Building")
+		{
+			Building enemyBuilding = (Building)_enemy.GetComponent<Building>();
+			enemyBuilding.TakeDamage(_attackDamage);
+		}
 	}
 
 	private float CalculateDegrees()
