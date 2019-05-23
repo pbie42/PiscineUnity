@@ -5,16 +5,17 @@ using UnityEngine;
 public class Footman : MonoBehaviour
 {
 	private AudioSource _audioSources;
-	private bool _selected = false;
-	private Vector3 _movement;
-	private float _speed = 1.2f;
+	private bool _attack = false;
 	private bool _move = false;
-	private Vector3 _destination = Vector3.zero;
+	private bool _selected = false;
+	private float _destOffset = 0.3f;
+	private float _speed = 1.2f;
+	private GameObject _enemy = null;
+	private int _hp = 100;
 	private SpriteRenderer _sprite;
 	private string _currentDir = "South";
-	private float _destOffset = 0.3f;
-	private int _hp = 100;
-	private GameObject _enemy;
+	private Vector3 _destination = Vector3.zero;
+	private Vector3 _movement;
 
 	public AudioClip[] selectedSounds;
 	public AudioClip[] orderedSounds;
@@ -38,6 +39,10 @@ public class Footman : MonoBehaviour
 		{
 			Move();
 		}
+		if (_attack)
+		{
+			AttackEnemy();
+		}
 
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	}
@@ -45,9 +50,10 @@ public class Footman : MonoBehaviour
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		Debug.Log("Collision");
-		if (GameObject.ReferenceEquals(_enemy, other.gameObject))
+		if (_enemy && GameObject.ReferenceEquals(_enemy, other.gameObject))
 		{
 			Debug.Log("SAME OBJECT!!");
+			AttackEnemy();
 		}
 	}
 
@@ -89,12 +95,27 @@ public class Footman : MonoBehaviour
 		animator.SetBool(_currentDir, false);
 	}
 
-	private void CalculateAnimation()
+	private void AttackEnemy()
+	{
+		_attack = true;
+		_move = false;
+		Debug.Log("_attack: " + _attack);
+		Debug.Log("_move: " + _move);
+		animator.SetBool("Move", false);
+		CalculateAnimation();
+	}
+
+	private float CalculateDegrees()
 	{
 		float degree = Vector3.Angle(Vector3.up, _destination);
 		if (_destination.x < transform.position.x)
 			degree = 180 + 180 - degree;
-		Debug.Log("degree " + degree);
+		return degree;
+	}
+
+	private void CalculateAnimation()
+	{
+		float degree = CalculateDegrees();
 		_sprite.flipX = false;
 		if (degree >= 337.5 && degree <= 22.5)
 		{
@@ -138,6 +159,10 @@ public class Footman : MonoBehaviour
 			_sprite.flipX = true;
 		}
 		animator.SetBool(_currentDir, true);
+		if (_move)
+			animator.SetBool("Move", true);
+		if (_attack)
+			animator.SetBool("Attack", true);
 	}
 
 	public void Move()
@@ -152,6 +177,7 @@ public class Footman : MonoBehaviour
 		{
 			_move = false;
 			animator.SetBool(_currentDir, false);
+			animator.SetBool("Move", false);
 		}
 	}
 
