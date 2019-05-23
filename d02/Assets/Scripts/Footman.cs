@@ -13,6 +13,7 @@ public class Footman : MonoBehaviour
 	private SpriteRenderer _sprite;
 	private string _currentDir = "South";
 	private float _destOffset = 0.3f;
+	private int _hp = 100;
 
 	public AudioClip[] selectedSounds;
 	public AudioClip[] orderedSounds;
