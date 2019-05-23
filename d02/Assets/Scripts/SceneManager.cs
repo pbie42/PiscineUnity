@@ -6,6 +6,9 @@ public class SceneManager : MonoBehaviour
 {
 	private List<Footman> _footmen;
 	private List<Footman> _selectedFootmen;
+	private List<Building> _friendlyBuildings;
+	private List<Building> _enemyBuildings;
+	private List<Orc> _orcs;
 	private bool _multipleSelected = false;
 
 	// Use this for initialization
@@ -13,6 +16,9 @@ public class SceneManager : MonoBehaviour
 	{
 		_footmen = new List<Footman>();
 		_selectedFootmen = new List<Footman>();
+		_friendlyBuildings = new List<Building>();
+		_enemyBuildings = new List<Building>();
+		_orcs = new List<Orc>();
 		Footman firstFootman = (Footman)FindObjectOfType(typeof(Footman));
 		_footmen.Add(firstFootman);
 	}
@@ -20,6 +26,7 @@ public class SceneManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		CheckWinner();
 		if (Input.GetKey(KeyCode.LeftControl))
 		{
 			if (Input.GetMouseButtonDown(0))
@@ -90,5 +97,33 @@ public class SceneManager : MonoBehaviour
 		foreach (Footman footman in _selectedFootmen)
 			if (footman.IsSelected())
 				footman.MoveOrdered(mousePos);
+	}
+
+	private void CheckWinner()
+	{
+		if (_friendlyBuildings.Count <= 0 && _footmen.Count <= 0)
+			Debug.Log("The Orc team wins!");
+		else if (_enemyBuildings.Count >= 0 && _orcs.Count <= 0)
+			Debug.Log("The Human team wins!");
+	}
+
+	public void AddFriendlyBuilding(Building friendly)
+	{
+		_friendlyBuildings.Add(friendly);
+	}
+
+	public void AddHuman(Footman human)
+	{
+		_footmen.Add(human);
+	}
+
+	public void AddOrc(Orc orc)
+	{
+		_orcs.Add(orc);
+	}
+
+	public void AddEnemyBuilding(Building enemy)
+	{
+		_enemyBuildings.Add(enemy);
 	}
 }

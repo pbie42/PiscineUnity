@@ -8,27 +8,31 @@ public class Footman : MonoBehaviour
 	private bool _attack = false;
 	private bool _move = false;
 	private bool _selected = false;
+	private float _attackTime = 3.0f;
+	private float _attackTimer = 3.0f;
 	private float _destOffset = 0.3f;
 	private float _speed = 1.2f;
 	private GameObject _enemy = null;
+	private int _attackDamage = 25;
 	private int _hp = 100;
 	private SpriteRenderer _sprite;
 	private string _currentDir = "South";
 	private Vector3 _destination = Vector3.zero;
 	private Vector3 _movement;
-	private float _attackTimer = 3.0f;
-	private float _attackTime = 3.0f;
-	private int _attackDamage = 25;
+	private SceneManager _sceneManager;
 
-	public AudioClip[] selectedSounds;
-	public AudioClip[] orderedSounds;
 	public Animator animator;
+	public AudioClip[] attackSounds;
+	public AudioClip[] orderedSounds;
+	public AudioClip[] selectedSounds;
 
 	// Use this for initialization
 	void Start()
 	{
 		_sprite = GetComponent<SpriteRenderer>();
 		_audioSources = GetComponent<AudioSource>();
+		_sceneManager = GameObject.FindObjectOfType<SceneManager>();
+		_sceneManager.AddHuman(this);
 	}
 
 	// Update is called once per frame
@@ -80,39 +84,10 @@ public class Footman : MonoBehaviour
 		Debug.Log("Trigger");
 	}
 
-	public void Deselect()
-	{
-		_selected = false;
-	}
-
-	public void Select()
-	{
-		SelectSound();
-		_selected = true;
-	}
-
-	public bool IsSelected()
-	{
-		return _selected;
-	}
-
 	public void AttackOrdered(GameObject enemy)
 	{
 		_enemy = enemy;
 		MoveOrdered(_enemy.transform.position);
-	}
-
-	public void MoveOrdered(Vector3 destination)
-	{
-		Debug.Log("gameObject.name " + gameObject.name);
-		OrderedSound();
-		_destination = new Vector3(destination.x, destination.y, transform.position.z);
-		_movement = _destination - transform.position;
-		_movement = _movement.normalized;
-		_move = true;
-		_attack = false;
-		animator.SetBool("Attack", false);
-		animator.SetBool(_currentDir, false);
 	}
 
 	private void AttackEnemy()
@@ -131,6 +106,42 @@ public class Footman : MonoBehaviour
 		{
 			Building enemyBuilding = (Building)_enemy.GetComponent<Building>();
 			enemyBuilding.TakeDamage(_attackDamage);
+			_audioSources.PlayOneShot(attackSounds[0]);
+		}
+		if (_enemy.tag == "Orc")
+		{
+			Orc enemyOrc = (Orc)_enemy.GetComponent<Orc>();
+			enemyOrc.TakeDamage(_attackDamage);
+			_audioSources.PlayOneShot(attackSounds[1]);
+		}
+	}
+
+	public void MoveOrdered(Vector3 destination)
+	{
+		Debug.Log("gameObject.name " + gameObject.name);
+		OrderedSound();
+		_destination = new Vector3(destination.x, destination.y, transform.position.z);
+		_movement = _destination - transform.position;
+		_movement = _movement.normalized;
+		_move = true;
+		_attack = false;
+		animator.SetBool("Attack", false);
+		animator.SetBool(_currentDir, false);
+	}
+
+	public void Move()
+	{
+		CalculateAnimation();
+		transform.Translate(_speed * _movement * Time.deltaTime);
+		float destX = _destination.x;
+		float destY = _destination.y;
+		float posX = transform.position.x;
+		float posY = transform.position.y;
+		if (Vector3.Distance(_destination, transform.position) < _destOffset)
+		{
+			_move = false;
+			animator.SetBool(_currentDir, false);
+			animator.SetBool("Move", false);
 		}
 	}
 
@@ -194,20 +205,20 @@ public class Footman : MonoBehaviour
 			animator.SetBool("Attack", true);
 	}
 
-	public void Move()
+	public void Deselect()
 	{
-		CalculateAnimation();
-		transform.Translate(_speed * _movement * Time.deltaTime);
-		float destX = _destination.x;
-		float destY = _destination.y;
-		float posX = transform.position.x;
-		float posY = transform.position.y;
-		if (Vector3.Distance(_destination, transform.position) < _destOffset)
-		{
-			_move = false;
-			animator.SetBool(_currentDir, false);
-			animator.SetBool("Move", false);
-		}
+		_selected = false;
+	}
+
+	public void Select()
+	{
+		SelectSound();
+		_selected = true;
+	}
+
+	public bool IsSelected()
+	{
+		return _selected;
 	}
 
 	private void SelectSound()

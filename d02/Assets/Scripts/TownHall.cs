@@ -10,11 +10,13 @@ public class TownHall : MonoBehaviour
 	public Footman footman;
 	public Orc orc;
 	public bool friendly;
+	public Building[] _townBuildings;
+	private int _buildingsCount;
 
 	// Use this for initialization
 	void Start()
 	{
-
+		_buildingsCount = _townBuildings.Length;
 	}
 
 	// Update is called once per frame
@@ -28,6 +30,15 @@ public class TownHall : MonoBehaviour
 			else
 				SpawnEnemy();
 			_spawnTimer = _spawnTime;
+		}
+	}
+
+	void CheckBuildings()
+	{
+		if (_buildingsCount > _townBuildings.Length)
+		{
+			_buildingsCount--;
+			_spawnTime += 2.5f;
 		}
 	}
 
