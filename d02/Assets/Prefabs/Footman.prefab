@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4150483505681170}
   - component: {fileID: 212859315624535548}
   - component: {fileID: 95372292187831148}
-  - component: {fileID: 61258954396290866}
   - component: {fileID: 114312263792808816}
   - component: {fileID: 82899265846399938}
   - component: {fileID: 50645546432029620}
+  - component: {fileID: 58061006687909306}
   m_Layer: 8
   m_Name: Footman
   m_TagString: Footman
@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016896421305640}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0.065, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,8 +65,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61258954396290866
-BoxCollider2D:
+--- !u!58 &58061006687909306
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -78,18 +78,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.484375, y: 0.625}
-    newSize: {x: 0.484375, y: 0.625}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.484375, y: 0.625}
-  m_EdgeRadius: 0
+  m_Radius: 0.21
 --- !u!82 &82899265846399938
 AudioSource:
   m_ObjectHideFlags: 1
@@ -199,6 +189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95372292187831148}
+  attackSounds:
+  - {fileID: 8300000, guid: 74229d9bebfd04bf28850a95cc81c6cb, type: 3}
+  - {fileID: 8300000, guid: d608770ec8b9948f8bed9395de90eaf4, type: 3}
   orderedSounds:
   - {fileID: 8300000, guid: 11d6c1e4886ec47fea40e59e532ef29c, type: 3}
   - {fileID: 8300000, guid: 5ff0f110849344bb0b2f78518fc225c4, type: 3}

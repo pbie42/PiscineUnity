@@ -6,13 +6,10 @@ public class Orc : MonoBehaviour
 {
 	private int _hp = 100;
 	private int _totalHp = 100;
-	private SceneManager _sceneManager;
 
 	// Use this for initialization
 	void Start()
 	{
-		_sceneManager = GameObject.FindObjectOfType<SceneManager>();
-		_sceneManager.AddOrc(this);
 	}
 
 	// Update is called once per frame
@@ -31,6 +28,5 @@ public class Orc : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("Collision orc: ");
 	}
 }

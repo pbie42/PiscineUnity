@@ -14,11 +14,6 @@ public class Building : MonoBehaviour
 	void Start()
 	{
 		_totalHp = buildingHP;
-		_sceneManager = GameObject.FindObjectOfType<SceneManager>();
-		if (friendly)
-			_sceneManager.AddFriendlyBuilding(this);
-		else
-			_sceneManager.AddEnemyBuilding(this);
 	}
 
 	// Update is called once per frame
@@ -37,6 +32,5 @@ public class Building : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("Collision Building: ");
 	}
 }

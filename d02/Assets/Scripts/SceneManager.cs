@@ -20,7 +20,21 @@ public class SceneManager : MonoBehaviour
 		_enemyBuildings = new List<Building>();
 		_orcs = new List<Orc>();
 		Footman firstFootman = (Footman)FindObjectOfType(typeof(Footman));
+		Orc firstOrc = (Orc)FindObjectOfType(typeof(Orc));
 		_footmen.Add(firstFootman);
+		_orcs.Add(firstOrc);
+
+		Building[] buildings = FindObjectsOfType<Building>();
+		foreach (Building building in buildings)
+		{
+			if (building.friendly)
+				_friendlyBuildings.Add(building);
+			else
+				_enemyBuildings.Add(building);
+		}
+
+		Debug.Log("_friendlyBuildings.Count: " + _friendlyBuildings.Count);
+		Debug.Log("_enemyBuildings.Count: " + _enemyBuildings.Count);
 	}
 
 	// Update is called once per frame
@@ -46,15 +60,15 @@ public class SceneManager : MonoBehaviour
 			if (Input.GetMouseButtonDown(0))
 			{
 				Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				Debug.Log("mousePos " + mousePos);
+				// Debug.Log("mousePos " + mousePos);
 				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+				Debug.Log("hit.collider: " + hit.collider);
 				if (hit.collider != null)
 				{
 					Debug.Log("hit.collider.gameObject.name" + hit.collider.gameObject.name);
 					int layer = hit.collider.gameObject.layer;
 					if (layer == 9)
 					{
-						Debug.Log("Enemy: ");
 						AttackCommand(hit.collider.gameObject);
 					}
 					else
@@ -115,6 +129,7 @@ public class SceneManager : MonoBehaviour
 	public void AddHuman(Footman human)
 	{
 		_footmen.Add(human);
+		LogCounts();
 	}
 
 	public void AddOrc(Orc orc)
@@ -125,5 +140,12 @@ public class SceneManager : MonoBehaviour
 	public void AddEnemyBuilding(Building enemy)
 	{
 		_enemyBuildings.Add(enemy);
+		LogCounts();
+	}
+
+	public void LogCounts()
+	{
+		Debug.Log("_footmen.Count: " + _footmen.Count);
+		Debug.Log("_orcs.Count: " + _orcs.Count);
 	}
 }

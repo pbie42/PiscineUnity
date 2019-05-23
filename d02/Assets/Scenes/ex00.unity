@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 21984582}
   - component: {fileID: 21984581}
   - component: {fileID: 21984583}
+  - component: {fileID: 21984584}
   m_Layer: 8
   m_Name: Church Human
   m_TagString: Untagged
@@ -207,7 +208,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 21984579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -226,6 +227,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
+--- !u!58 &21984584
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 21984579}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.96
 --- !u!1 &66063201
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +253,7 @@ GameObject:
   - component: {fileID: 66063204}
   - component: {fileID: 66063203}
   - component: {fileID: 66063205}
+  - component: {fileID: 66063206}
   m_Layer: 8
   m_Name: Factory Human
   m_TagString: Untagged
@@ -320,7 +337,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 66063201}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -339,6 +356,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
+--- !u!58 &66063206
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 66063201}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.86
 --- !u!1 &302378180
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +384,7 @@ GameObject:
   - component: {fileID: 302378185}
   - component: {fileID: 302378184}
   - component: {fileID: 302378186}
+  - component: {fileID: 302378187}
   m_Layer: 9
   m_Name: TownHall Orc
   m_TagString: Building
@@ -383,14 +416,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a3123bf9ba54aafbb1b4041e26d80e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footman: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
-  orc: {fileID: 114729533678991386, guid: 2ed0367b4021d405fb1eba04096fc722, type: 2}
   friendly: 0
   _townBuildings:
   - {fileID: 975635274}
   - {fileID: 1258095217}
   - {fileID: 735272080}
   - {fileID: 1666105065}
+  footman: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
+  orc: {fileID: 114729533678991386, guid: 2ed0367b4021d405fb1eba04096fc722, type: 2}
 --- !u!212 &302378183
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -441,7 +474,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 302378180}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -493,6 +526,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &302378187
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 302378180}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.12
 --- !u!1 &325551928
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,6 +614,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 50315089342126456, guid: 2ed0367b4021d405fb1eba04096fc722,
+        type: 2}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ed0367b4021d405fb1eba04096fc722, type: 2}
   m_IsPrefabParent: 0
@@ -615,6 +668,7 @@ GameObject:
   - component: {fileID: 735272080}
   - component: {fileID: 735272082}
   - component: {fileID: 735272083}
+  - component: {fileID: 735272084}
   m_Layer: 9
   m_Name: Church Orc
   m_TagString: Building
@@ -698,7 +752,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 735272078}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -737,6 +791,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &735272084
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 735272078}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.8
 --- !u!1 &975635272
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,6 +818,7 @@ GameObject:
   - component: {fileID: 975635274}
   - component: {fileID: 975635276}
   - component: {fileID: 975635277}
+  - component: {fileID: 975635278}
   m_Layer: 9
   m_Name: Mine Orc
   m_TagString: Building
@@ -832,7 +902,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 975635272}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -871,6 +941,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &975635278
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 975635272}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.79
 --- !u!1 &1043248151
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,6 +967,7 @@ GameObject:
   - component: {fileID: 1043248154}
   - component: {fileID: 1043248153}
   - component: {fileID: 1043248155}
+  - component: {fileID: 1043248156}
   m_Layer: 8
   m_Name: Farm Human
   m_TagString: Untagged
@@ -965,7 +1051,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1043248151}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -984,6 +1070,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!58 &1043248156
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1043248151}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6
 --- !u!1001 &1162781160
 Prefab:
   m_ObjectHideFlags: 0
@@ -991,14 +1092,9 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 325551929}
     m_Modifications:
-    - target: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2,
-        type: 2}
-      propertyPath: attackSounds.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4150483505681170, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.065
       objectReference: {fileID: 0}
     - target: {fileID: 4150483505681170, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1028,16 +1124,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2,
+    - target: {fileID: 50645546432029620, guid: dbb5ab1a0d3eb4ca5954c45e08286da2,
         type: 2}
-      propertyPath: attackSounds.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 74229d9bebfd04bf28850a95cc81c6cb, type: 3}
-    - target: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2,
-        type: 2}
-      propertyPath: attackSounds.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: d608770ec8b9948f8bed9395de90eaf4, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
   m_IsPrefabParent: 0
@@ -1053,6 +1144,7 @@ GameObject:
   - component: {fileID: 1258095217}
   - component: {fileID: 1258095219}
   - component: {fileID: 1258095220}
+  - component: {fileID: 1258095221}
   m_Layer: 9
   m_Name: Farm Orc
   m_TagString: Building
@@ -1136,7 +1228,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258095215}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1175,6 +1267,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &1258095221
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258095215}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.64
 --- !u!1 &1348166252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1294,7 @@ GameObject:
   - component: {fileID: 1348166255}
   - component: {fileID: 1348166256}
   - component: {fileID: 1348166257}
+  - component: {fileID: 1348166258}
   m_Layer: 8
   m_Name: TownHall Human
   m_TagString: Untagged
@@ -1262,14 +1370,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a3123bf9ba54aafbb1b4041e26d80e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footman: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
-  orc: {fileID: 114729533678991386, guid: 2ed0367b4021d405fb1eba04096fc722, type: 2}
   friendly: 1
   _townBuildings:
   - {fileID: 1043248153}
   - {fileID: 66063203}
   - {fileID: 21984581}
   - {fileID: 2085085884}
+  footman: {fileID: 114312263792808816, guid: dbb5ab1a0d3eb4ca5954c45e08286da2, type: 2}
+  orc: {fileID: 114729533678991386, guid: 2ed0367b4021d405fb1eba04096fc722, type: 2}
 --- !u!114 &1348166256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1289,7 +1397,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1348166252}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1308,6 +1416,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!58 &1348166258
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1348166252}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.99
 --- !u!1 &1432673068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,6 +1606,7 @@ GameObject:
   - component: {fileID: 1666105067}
   - component: {fileID: 1666105066}
   - component: {fileID: 1666105065}
+  - component: {fileID: 1666105069}
   m_Layer: 9
   m_Name: Tower Orc
   m_TagString: Building
@@ -1542,7 +1666,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1666105063}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1605,6 +1729,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!58 &1666105069
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1666105063}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.51
 --- !u!1 &1859910415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,6 +1823,7 @@ GameObject:
   - component: {fileID: 2085085885}
   - component: {fileID: 2085085884}
   - component: {fileID: 2085085883}
+  - component: {fileID: 2085085886}
   m_Layer: 8
   m_Name: Tower Human
   m_TagString: Untagged
@@ -1710,7 +1850,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2085085881}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1786,3 +1926,18 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!58 &2085085886
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2085085881}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.61

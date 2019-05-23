@@ -31,8 +31,8 @@ public class Footman : MonoBehaviour
 	{
 		_sprite = GetComponent<SpriteRenderer>();
 		_audioSources = GetComponent<AudioSource>();
-		_sceneManager = GameObject.FindObjectOfType<SceneManager>();
-		_sceneManager.AddHuman(this);
+		// _sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
+		// _sceneManager.AddHuman(this);
 	}
 
 	// Update is called once per frame
@@ -71,31 +71,63 @@ public class Footman : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("Collision");
+
 		if (_enemy && GameObject.ReferenceEquals(_enemy, other.gameObject))
 		{
-			Debug.Log("SAME OBJECT!!");
 			AttackEnemy();
+			if (_enemy.tag == "Building")
+				_audioSources.PlayOneShot(attackSounds[0]);
+			else if (_enemy.tag == "Orc")
+			{
+				Debug.Log("Collision with Orc");
+				_audioSources.PlayOneShot(attackSounds[1]);
+			}
 		}
 	}
 
-	private void OnTriggerEnter2D(Collider2D other)
+	private void OnCollisionExit2D(Collision2D other)
 	{
-		Debug.Log("Trigger");
+		if (_enemy && GameObject.ReferenceEquals(_enemy, other.gameObject))
+		{
+			_attack = false;
+			AttackOrdered(other.gameObject);
+		}
+	}
+
+	private void OnCollisionStay2D(Collision2D other)
+	{
+		if (!_attack && _enemy && GameObject.ReferenceEquals(_enemy, other.gameObject))
+		{
+			AttackEnemy();
+			if (_enemy.tag == "Building")
+				_audioSources.PlayOneShot(attackSounds[0]);
+			else if (_enemy.tag == "Orc")
+			{
+				Debug.Log("Collision with Orc");
+				_audioSources.PlayOneShot(attackSounds[1]);
+			}
+		}
 	}
 
 	public void AttackOrdered(GameObject enemy)
 	{
-		_enemy = enemy;
-		MoveOrdered(_enemy.transform.position);
+		if (_attack && _enemy && GameObject.ReferenceEquals(_enemy, enemy))
+		{
+			Debug.Log("WE IN HERE HOMIE!!");
+			AttackEnemy();
+		}
+		else
+		{
+			_attack = false;
+			_enemy = enemy;
+			MoveOrdered(_enemy.transform.position);
+		}
 	}
 
 	private void AttackEnemy()
 	{
 		_attack = true;
 		_move = false;
-		Debug.Log("_attack: " + _attack);
-		Debug.Log("_move: " + _move);
 		animator.SetBool("Move", false);
 		CalculateAnimation();
 	}
@@ -118,7 +150,6 @@ public class Footman : MonoBehaviour
 
 	public void MoveOrdered(Vector3 destination)
 	{
-		Debug.Log("gameObject.name " + gameObject.name);
 		OrderedSound();
 		_destination = new Vector3(destination.x, destination.y, transform.position.z);
 		_movement = _destination - transform.position;
@@ -159,7 +190,6 @@ public class Footman : MonoBehaviour
 		_sprite.flipX = false;
 		if (degree >= 337.5 && degree <= 22.5)
 		{
-			Debug.Log("North");
 			_currentDir = "North";
 			_sprite.flipX = false;
 		}
@@ -223,14 +253,12 @@ public class Footman : MonoBehaviour
 
 	private void SelectSound()
 	{
-		Debug.Log("SelectSound");
 		int selectedSound = Random.Range(0, selectedSounds.Length - 1);
 		_audioSources.PlayOneShot(selectedSounds[selectedSound]);
 	}
 
 	private void OrderedSound()
 	{
-		Debug.Log("OrderedSound");
 		int selectedSound = Random.Range(0, orderedSounds.Length - 1);
 		_audioSources.PlayOneShot(orderedSounds[selectedSound]);
 	}
