@@ -78,7 +78,11 @@ public class SceneManager : MonoBehaviour
 					}
 				}
 				else
+				{
+					foreach (Footman footman in _selectedFootmen)
+						footman.RemoveEnemy();
 					MoveFootman(mousePos);
+				}
 			}
 		}
 	}
@@ -103,14 +107,20 @@ public class SceneManager : MonoBehaviour
 	{
 		foreach (Footman footman in _selectedFootmen)
 			if (footman.IsSelected())
+			{
+				footman.OrderedSound();
 				footman.AttackOrdered(enemy);
+			}
 	}
 
 	private void MoveFootman(Vector3 mousePos)
 	{
 		foreach (Footman footman in _selectedFootmen)
 			if (footman.IsSelected())
+			{
+				footman.OrderedSound();
 				footman.MoveOrdered(mousePos);
+			}
 	}
 
 	private void CheckWinner()

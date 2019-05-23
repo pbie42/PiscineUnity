@@ -15,11 +15,11 @@ public class Footman : MonoBehaviour
 	private GameObject _enemy = null;
 	private int _attackDamage = 25;
 	private int _hp = 100;
+	private SceneManager _sceneManager;
 	private SpriteRenderer _sprite;
 	private string _currentDir = "South";
 	private Vector3 _destination = Vector3.zero;
 	private Vector3 _movement;
-	private SceneManager _sceneManager;
 
 	public Animator animator;
 	public AudioClip[] attackSounds;
@@ -31,8 +31,6 @@ public class Footman : MonoBehaviour
 	{
 		_sprite = GetComponent<SpriteRenderer>();
 		_audioSources = GetComponent<AudioSource>();
-		// _sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
-		// _sceneManager.AddHuman(this);
 	}
 
 	// Update is called once per frame
@@ -48,7 +46,7 @@ public class Footman : MonoBehaviour
 		}
 		if (_attack)
 		{
-			if (_enemy)
+			if (_enemy && _enemy.activeSelf)
 			{
 				_attackTimer -= Time.deltaTime;
 				if (_attackTimer <= 0)
@@ -75,13 +73,6 @@ public class Footman : MonoBehaviour
 		if (_enemy && GameObject.ReferenceEquals(_enemy, other.gameObject))
 		{
 			AttackEnemy();
-			if (_enemy.tag == "Building")
-				_audioSources.PlayOneShot(attackSounds[0]);
-			else if (_enemy.tag == "Orc")
-			{
-				Debug.Log("Collision with Orc");
-				_audioSources.PlayOneShot(attackSounds[1]);
-			}
 		}
 	}
 
@@ -99,13 +90,6 @@ public class Footman : MonoBehaviour
 		if (!_attack && _enemy && GameObject.ReferenceEquals(_enemy, other.gameObject))
 		{
 			AttackEnemy();
-			if (_enemy.tag == "Building")
-				_audioSources.PlayOneShot(attackSounds[0]);
-			else if (_enemy.tag == "Orc")
-			{
-				Debug.Log("Collision with Orc");
-				_audioSources.PlayOneShot(attackSounds[1]);
-			}
 		}
 	}
 
@@ -113,7 +97,6 @@ public class Footman : MonoBehaviour
 	{
 		if (_attack && _enemy && GameObject.ReferenceEquals(_enemy, enemy))
 		{
-			Debug.Log("WE IN HERE HOMIE!!");
 			AttackEnemy();
 		}
 		else
@@ -150,9 +133,17 @@ public class Footman : MonoBehaviour
 
 	public void MoveOrdered(Vector3 destination)
 	{
-		OrderedSound();
-		_destination = new Vector3(destination.x, destination.y, transform.position.z);
-		_movement = _destination - transform.position;
+		if (!_enemy)
+		{
+			_destination = new Vector3(destination.x, destination.y, transform.position.z);
+			_movement = _destination - transform.position;
+		}
+		else
+		{
+			_destination = new Vector3(_enemy.transform.position.x, _enemy.transform.position.y, transform.position.z);
+			_movement = _destination - transform.position;
+		}
+
 		_movement = _movement.normalized;
 		_move = true;
 		_attack = false;
@@ -163,6 +154,12 @@ public class Footman : MonoBehaviour
 	public void Move()
 	{
 		CalculateAnimation();
+		if (_enemy)
+		{
+			_destination = new Vector3(_enemy.transform.position.x, _enemy.transform.position.y, transform.position.z);
+			_movement = _destination - transform.position;
+			_movement = _movement.normalized;
+		}
 		transform.Translate(_speed * _movement * Time.deltaTime);
 		float destX = _destination.x;
 		float destY = _destination.y;
@@ -257,7 +254,7 @@ public class Footman : MonoBehaviour
 		_audioSources.PlayOneShot(selectedSounds[selectedSound]);
 	}
 
-	private void OrderedSound()
+	public void OrderedSound()
 	{
 		int selectedSound = Random.Range(0, orderedSounds.Length - 1);
 		_audioSources.PlayOneShot(orderedSounds[selectedSound]);
@@ -267,6 +264,11 @@ public class Footman : MonoBehaviour
 	{
 		Vector4 color = new Vector4(r / 255, g / 255, b / 255, a / 255);
 		return color;
+	}
+
+	public void RemoveEnemy()
+	{
+		_enemy = null;
 	}
 
 }
