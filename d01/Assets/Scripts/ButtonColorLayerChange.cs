@@ -39,6 +39,7 @@ public class ButtonColorLayerChange : MonoBehaviour
 
 	private Vector4 GetColor(string name)
 	{
+		Debug.Log("Actually here");
 		if (name == "Claire")
 			return hexColor(37, 61, 95, 255);
 		if (name == "John")

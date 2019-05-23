@@ -30,10 +30,12 @@ public class ButtonColorChange : MonoBehaviour
 	private void ChangeColors(GameObject obj)
 	{
 		_spriteRenderer.color = GetColor(obj.name);
+		gameObject.layer = GetLayer(obj.name);
 	}
 
 	private Vector4 GetColor(string name)
 	{
+		Debug.Log("GetColor");
 		if (name == "Claire")
 			return hexColor(37, 61, 95, 255);
 		if (name == "John")
@@ -45,6 +47,7 @@ public class ButtonColorChange : MonoBehaviour
 
 	private int GetLayer(string name)
 	{
+		Debug.Log("name" + name);
 		if (name == "Claire")
 			return 12;
 		if (name == "John")
