@@ -14,6 +14,7 @@ public class Footman : MonoBehaviour
 	private string _currentDir = "South";
 	private float _destOffset = 0.3f;
 	private int _hp = 100;
+	private GameObject _enemy;
 
 	public AudioClip[] selectedSounds;
 	public AudioClip[] orderedSounds;
@@ -41,15 +42,13 @@ public class Footman : MonoBehaviour
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	}
 
-	public Vector4 hexColor(float r, float g, float b, float a)
-	{
-		Vector4 color = new Vector4(r / 255, g / 255, b / 255, a / 255);
-		return color;
-	}
-
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		Debug.Log("Collision");
+		if (GameObject.ReferenceEquals(_enemy, other.gameObject))
+		{
+			Debug.Log("SAME OBJECT!!");
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -71,6 +70,12 @@ public class Footman : MonoBehaviour
 	public bool IsSelected()
 	{
 		return _selected;
+	}
+
+	public void AttackOrdered(GameObject enemy)
+	{
+		_enemy = enemy;
+		MoveOrdered(_enemy.transform.position);
 	}
 
 	public void MoveOrdered(Vector3 destination)
@@ -135,11 +140,6 @@ public class Footman : MonoBehaviour
 		animator.SetBool(_currentDir, true);
 	}
 
-	public void GetAngle()
-	{
-
-	}
-
 	public void Move()
 	{
 		CalculateAnimation();
@@ -167,6 +167,12 @@ public class Footman : MonoBehaviour
 		Debug.Log("OrderedSound");
 		int selectedSound = Random.Range(0, orderedSounds.Length - 1);
 		_audioSources.PlayOneShot(orderedSounds[selectedSound]);
+	}
+
+	public Vector4 hexColor(float r, float g, float b, float a)
+	{
+		Vector4 color = new Vector4(r / 255, g / 255, b / 255, a / 255);
+		return color;
 	}
 
 }

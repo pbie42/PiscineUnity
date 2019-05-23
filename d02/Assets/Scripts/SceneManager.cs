@@ -43,11 +43,21 @@ public class SceneManager : MonoBehaviour
 				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 				if (hit.collider != null)
 				{
-					ClearFootmen();
-					SelectFootman(hit);
+					Debug.Log("hit.collider.gameObject.name" + hit.collider.gameObject.name);
+					int layer = hit.collider.gameObject.layer;
+					if (layer == 9)
+					{
+						Debug.Log("Enemy: ");
+						AttackCommand(hit.collider.gameObject);
+					}
+					else
+					{
+						ClearFootmen();
+						SelectFootman(hit);
+					}
 				}
 				else
-					MoveOrder(mousePos);
+					MoveFootman(mousePos);
 			}
 		}
 	}
@@ -68,9 +78,11 @@ public class SceneManager : MonoBehaviour
 		Debug.Log("_selectedFootmen.Count " + _selectedFootmen.Count);
 	}
 
-	private void MoveOrder(Vector3 mousePos)
+	private void AttackCommand(GameObject enemy)
 	{
-		MoveFootman(mousePos);
+		foreach (Footman footman in _selectedFootmen)
+			if (footman.IsSelected())
+				footman.AttackOrdered(enemy);
 	}
 
 	private void MoveFootman(Vector3 mousePos)

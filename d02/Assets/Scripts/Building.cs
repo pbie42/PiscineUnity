@@ -25,4 +25,9 @@ public class Building : MonoBehaviour
 		if (buildingHP <= 0)
 			Destroy(gameObject);
 	}
+
+	private void OnCollisionEnter2D(Collision2D other)
+	{
+		Debug.Log("Collision Building: ");
+	}
 }
