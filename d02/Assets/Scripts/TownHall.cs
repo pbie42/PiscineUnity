@@ -32,8 +32,6 @@ public class TownHall : MonoBehaviour
 		_spawn += Time.deltaTime;
 		if (_spawnTimer <= 0)
 		{
-			if (!friendly)
-				Debug.Log("_spawn: " + _spawn);
 			if (friendly)
 				SpawnFriendly();
 			else
@@ -57,24 +55,20 @@ public class TownHall : MonoBehaviour
 		}
 		if (_buildingsCount > _buildingsAlive)
 		{
-			Debug.Log("Building Lost");
 			_buildingsCount--;
 			_spawnTime += 2.5f;
-			Debug.Log("_spawnTime: " + _spawnTime);
 		}
 	}
 
 	void SpawnFriendly()
 	{
 		Footman newFootman = Instantiate(footman);
-		_sceneManager.AddHuman(newFootman);
 		newFootman.transform.position = new Vector3(-4.8f, 2.5f, -1.0f);
 	}
 
 	void SpawnEnemy()
 	{
 		Orc newOrc = Instantiate(orc);
-		_sceneManager.AddOrc(newOrc);
 		newOrc.transform.position = new Vector3(5.1f, -1.0f, -1.0f);
 	}
 }

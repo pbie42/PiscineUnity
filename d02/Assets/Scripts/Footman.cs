@@ -63,8 +63,6 @@ public class Footman : MonoBehaviour
 				animator.SetBool(_currentDir, false);
 			}
 		}
-
-		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	}
 
 	private void OnCollisionEnter2D(Collision2D other)
@@ -161,10 +159,6 @@ public class Footman : MonoBehaviour
 			_movement = _movement.normalized;
 		}
 		transform.Translate(_speed * _movement * Time.deltaTime);
-		float destX = _destination.x;
-		float destY = _destination.y;
-		float posX = transform.position.x;
-		float posY = transform.position.y;
 		if (Vector3.Distance(_destination, transform.position) < _destOffset)
 		{
 			_move = false;

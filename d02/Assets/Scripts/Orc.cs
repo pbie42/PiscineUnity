@@ -60,9 +60,9 @@ public class Orc : MonoBehaviour
 		Debug.Log("Orc unit [" + _hp + "/" + _totalHp + "] has been attacked");
 		if (_hp <= 0)
 		{
-			_audioSources.PlayOneShot(deathSound);
-			gameObject.SetActive(false);
-			Destroy(gameObject, 3f);
+			_audioSources.Play();
+			// gameObject.SetActive(false);
+			Destroy(gameObject, 0.8f);
 		}
 	}
 
