@@ -140,11 +140,7 @@ public class GameState : MonoBehaviour
 	private string CalcGrade()
 	{
 		float testing = (float)gManager.playerHp / 10;
-		Debug.Log("testing: " + testing);
 		float gradeScore = (float)gManager.playerEnergy * testing;
-		Debug.Log("gManager.playerEnergy: " + gManager.playerEnergy);
-		Debug.Log("gManager.playerHp: " + gManager.playerHp);
-		Debug.Log("gradeScore: " + gradeScore);
 
 		if (gradeScore < 500)
 			return "F";
