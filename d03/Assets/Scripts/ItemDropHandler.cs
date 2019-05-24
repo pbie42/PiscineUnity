@@ -6,6 +6,7 @@ public class ItemDropHandler : MonoBehaviour, UnityEngine.EventSystems.IDropHand
 {
 
 	private gameManager _gameManager;
+	public towerScript turret;
 
 	// Use this for initialization
 	void Start()
@@ -23,10 +24,14 @@ public class ItemDropHandler : MonoBehaviour, UnityEngine.EventSystems.IDropHand
 	{
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Debug.Log("Input.mousePosition: " + mousePos);
+		Debug.Log("eventData: " + eventData);
 		RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 		if (hit.collider != null)
 		{
 			Debug.Log("hit.collider.gameObject: " + hit.collider.gameObject);
+			towerScript newTurret = Instantiate(turret);
+			newTurret.transform.position = new Vector3(mousePos.x, mousePos.y, -1);
+			_gameManager.playerEnergy -= turret.energy;
 		}
 	}
 
