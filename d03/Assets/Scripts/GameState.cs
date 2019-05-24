@@ -21,11 +21,6 @@ public class GameState : MonoBehaviour
 		gManager = gameManager.gm;
 		pauseMenu.SetActive(false);
 		confirmMenu.SetActive(false);
-		PauseGame();
-		// if (!gManager)
-		// 	Debug.Log("NO GAME MANAGER");
-		// gManager.pause(true);
-		speed.text = "PRESS PLAY";
 		Cursor.SetCursor(mouse, Vector2.zero, CursorMode.Auto);
 	}
 
@@ -33,7 +28,10 @@ public class GameState : MonoBehaviour
 	void Update()
 	{
 		if (!_gameStarted)
+		{
 			PauseGame();
+			speed.text = "PRESS PLAY";
+		}
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			if (_paused)
