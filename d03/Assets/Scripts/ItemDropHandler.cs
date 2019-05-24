@@ -5,10 +5,12 @@ using UnityEngine;
 public class ItemDropHandler : MonoBehaviour, UnityEngine.EventSystems.IDropHandler
 {
 
+	private gameManager _gameManager;
+
 	// Use this for initialization
 	void Start()
 	{
-
+		_gameManager = (gameManager)FindObjectOfType(typeof(gameManager));
 	}
 
 	// Update is called once per frame

@@ -6,6 +6,7 @@ public class ItemDragHandler : MonoBehaviour, UnityEngine.EventSystems.IDragHand
 {
 
 	private Vector3 _startPosition;
+	[HideInInspector] public bool canDrag = true;
 
 	// Use this for initialization
 	void Start()
@@ -21,11 +22,13 @@ public class ItemDragHandler : MonoBehaviour, UnityEngine.EventSystems.IDragHand
 
 	public void OnDrag(UnityEngine.EventSystems.PointerEventData eventData)
 	{
-		transform.position = Input.mousePosition;
+		if (canDrag)
+			transform.position = Input.mousePosition;
 	}
 
 	public void OnEndDrag(UnityEngine.EventSystems.PointerEventData eventData)
 	{
-		transform.localPosition = _startPosition;
+		if (canDrag)
+			transform.localPosition = _startPosition;
 	}
 }
