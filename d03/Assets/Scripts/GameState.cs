@@ -137,6 +137,13 @@ public class GameState : MonoBehaviour
 		UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex);
 	}
 
+	public void NextLevel()
+	{
+		int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+		if (currentSceneIndex <= 2)
+			UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex + 1);
+	}
+
 	private string CalcGrade()
 	{
 		float testing = (float)gManager.playerHp / 10;
