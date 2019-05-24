@@ -20,6 +20,7 @@ public class StartMenu : MonoBehaviour
 	public void StartGame()
 	{
 		Debug.Log("Starting Game");
+		UnityEngine.SceneManagement.SceneManager.LoadScene(1);
 	}
 
 	public void QuitGame()
