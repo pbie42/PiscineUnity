@@ -7,22 +7,33 @@ public class GameState : MonoBehaviour
 	public gameManager gManager;
 	public GameObject pauseMenu;
 	public GameObject confirmMenu;
+	public Texture2D mouse;
 	private bool _paused = false;
+	private bool _pausedGame = false;
 	private bool _confirmedQuit = false;
-	public UnityEngine.UI.Text resume;
-	public UnityEngine.UI.Text exit;
+	private bool _gameStarted = false;
+	public UnityEngine.UI.Text speed;
 
 
 	// Use this for initialization
 	void Start()
 	{
+		gManager = gameManager.gm;
 		pauseMenu.SetActive(false);
 		confirmMenu.SetActive(false);
+		PauseGame();
+		// if (!gManager)
+		// 	Debug.Log("NO GAME MANAGER");
+		// gManager.pause(true);
+		speed.text = "PRESS PLAY";
+		Cursor.SetCursor(mouse, Vector2.zero, CursorMode.Auto);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if (!_gameStarted)
+			PauseGame();
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			if (_paused)
@@ -43,6 +54,43 @@ public class GameState : MonoBehaviour
 		_confirmedQuit = false;
 		pauseMenu.SetActive(false);
 		confirmMenu.SetActive(false);
+	}
+
+	public void PauseGame()
+	{
+		if (!_pausedGame)
+		{
+			gManager.pause(true);
+			_pausedGame = true;
+			speed.text = "PAUSED";
+		}
+	}
+
+	public void PlayGame()
+	{
+		gManager.pause(false);
+		gManager.changeSpeed(1.0f);
+		_pausedGame = false;
+		_gameStarted = true;
+		speed.text = "SPEED: 1x";
+	}
+
+	public void DoubleSpeed()
+	{
+		gManager.pause(false);
+		gManager.changeSpeed(2.0f);
+		_pausedGame = false;
+		_gameStarted = true;
+		speed.text = "SPEED: 2x";
+	}
+
+	public void QuadrupleSpeed()
+	{
+		gManager.pause(false);
+		gManager.changeSpeed(4.0f);
+		_pausedGame = false;
+		_gameStarted = true;
+		speed.text = "SPEED: 4x";
 	}
 
 	public void PauseMenu()
