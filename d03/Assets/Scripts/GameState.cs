@@ -7,22 +7,30 @@ public class GameState : MonoBehaviour
 	public gameManager gManager;
 	public GameObject pauseMenu;
 	public GameObject confirmMenu;
+	public GameObject victoryMenu;
+	public GameObject failMenu;
 	public Texture2D mouse;
 	private bool _paused = false;
 	private bool _pausedGame = false;
 	private bool _confirmedQuit = false;
 	private bool _gameStarted = false;
 	public UnityEngine.UI.Text speed;
+	public UnityEngine.UI.Text victoryGrade;
+
+	public static GameState gState;
 
 
 	// Use this for initialization
 	void Start()
 	{
+		if (!gState)
+			gState = this;
 		gManager = gameManager.gm;
 		pauseMenu.SetActive(false);
 		confirmMenu.SetActive(false);
 		Cursor.SetCursor(mouse, Vector2.zero, CursorMode.Auto);
 	}
+
 
 	// Update is called once per frame
 	void Update()
@@ -107,5 +115,47 @@ public class GameState : MonoBehaviour
 	public void QuitToMainMenu()
 	{
 		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+	}
+
+	public void Victory(bool victory)
+	{
+		if (victory)
+		{
+			victoryGrade.text = CalcGrade();
+			victoryMenu.SetActive(true);
+		}
+		else
+		{
+			CalcGrade();
+			failMenu.SetActive(true);
+		}
+	}
+
+	public void Retry()
+	{
+		int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+		UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneIndex);
+	}
+
+	private string CalcGrade()
+	{
+		float testing = (float)gManager.playerHp / 10;
+		Debug.Log("testing: " + testing);
+		float gradeScore = (float)gManager.playerEnergy * testing;
+		Debug.Log("gManager.playerEnergy: " + gManager.playerEnergy);
+		Debug.Log("gManager.playerHp: " + gManager.playerHp);
+		Debug.Log("gradeScore: " + gradeScore);
+
+		if (gradeScore < 500)
+			return "F";
+		if (gradeScore < 1000)
+			return "D";
+		if (gradeScore < 1500)
+			return "C";
+		if (gradeScore < 2000)
+			return "B";
+		if (gradeScore > 200)
+			return "A";
+		return "F";
 	}
 }
