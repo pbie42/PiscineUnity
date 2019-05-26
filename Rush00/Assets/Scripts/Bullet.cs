@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-	public float speed = 60f;
+	public float speed;
 	public Rigidbody2D rb;
 	public float time = 0f;
 
@@ -18,13 +18,13 @@ public class Bullet : MonoBehaviour
 			if (timer >= time)
 				Destroy(gameObject);
 		}
-		transform.Translate(Vector3.down * 10 * Time.deltaTime);
+		transform.Translate(Vector3.down * speed * Time.deltaTime);
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log("other.name: " + other.name);
-		if (other.gameObject.tag == "Wall")
+		Debug.Log("other.gameObject.tag: " + other.gameObject.tag);
+		if (other.gameObject.tag != "Player" && other.gameObject.tag != "Weapon" && other.gameObject.tag != "Bullet")
 			Destroy(gameObject);
 	}
 }
