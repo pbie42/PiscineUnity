@@ -215,9 +215,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1922898607}
   forceIncrease: 100
-  forceMaxY: 8000
+  forceMaxY: 3000
   forceMinY: 50
-  forceMaxZ: 8000
+  forceMaxZ: 3000
   forceMinZ: 50
 --- !u!1001 &589887346
 Prefab:
@@ -380,7 +380,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0

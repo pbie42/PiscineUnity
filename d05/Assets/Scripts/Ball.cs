@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+	private Camera _camera;
 	public Transform target;
 	private Rigidbody _rgbd;
 	private Vector3 _direction;
@@ -20,8 +21,10 @@ public class Ball : MonoBehaviour
 	void Start()
 	{
 		_rgbd = gameObject.GetComponent<Rigidbody>();
+		_camera = GameObject.FindObjectOfType<Camera>();
 		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
 		transform.LookAt(targetPosition);
+		SetCameraPosition();
 	}
 
 	// Update is called once per frame
@@ -30,7 +33,13 @@ public class Ball : MonoBehaviour
 		float zVel = transform.InverseTransformDirection(_rgbd.velocity).z;
 		Debug.Log("zVel: " + zVel.ToString("F4"));
 		if (zVel >= -0.05 && zVel <= 0.05)
+		{
 			_rgbd.velocity = Vector3.zero;
+			_rgbd.freezeRotation = true;
+			Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+			transform.LookAt(targetPosition);
+			SetCameraPosition();
+		}
 		if (Input.GetKey(KeyCode.Space))
 		{
 			if (_increase && _forceY <= forceMaxY && _forceZ <= forceMaxZ)
@@ -46,8 +55,8 @@ public class Ball : MonoBehaviour
 			}
 			if (!_increase && _forceY >= forceMinY && _forceZ >= forceMinZ)
 			{
-				_forceY += forceIncrease;
-				_forceZ += forceIncrease;
+				_forceY -= forceIncrease;
+				_forceZ -= forceIncrease;
 				Debug.Log("_forceY: " + _forceY);
 				Debug.Log("_forceZ: " + _forceZ);
 			}
@@ -68,6 +77,22 @@ public class Ball : MonoBehaviour
 	}
 
 
+	private void SetCameraPosition()
+	{
+		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+		_camera.transform.LookAt(targetPosition);
+		float newZ = 0.0f;
+		if (target.transform.position.z < transform.position.z)
+		{
+			newZ = 7;
+		}
+		else if (target.transform.position.z > transform.position.z)
+		{
+			newZ = -7;
+		}
+
+		_camera.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + newZ);
+	}
 
 	private void OnCollisionEnter(Collision other)
 	{
