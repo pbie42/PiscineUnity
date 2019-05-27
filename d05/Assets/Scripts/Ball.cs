@@ -27,8 +27,10 @@ public class Ball : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-		transform.LookAt(targetPosition);
+		float zVel = transform.InverseTransformDirection(_rgbd.velocity).z;
+		Debug.Log("zVel: " + zVel.ToString("F4"));
+		if (zVel >= -0.05 && zVel <= 0.05)
+			_rgbd.velocity = Vector3.zero;
 		if (Input.GetKey(KeyCode.Space))
 		{
 			if (_increase && _forceY <= forceMaxY && _forceZ <= forceMaxZ)
@@ -56,12 +58,16 @@ public class Ball : MonoBehaviour
 		}
 		if (Input.GetKeyUp(KeyCode.Space))
 		{
+			Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+			transform.LookAt(targetPosition);
 			_rgbd.AddForce(transform.forward * _forceZ);
 			_rgbd.AddForce(transform.up * _forceY);
 			_forceY = 0.0f;
 			_forceZ = 0.0f;
 		}
 	}
+
+
 
 	private void OnCollisionEnter(Collision other)
 	{
