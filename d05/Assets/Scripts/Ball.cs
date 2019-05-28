@@ -20,6 +20,7 @@ public class Ball : MonoBehaviour
 	public float forceMaxZ;
 	public float forceMinY;
 	public float forceMinZ;
+	public GameObject arrow;
 	public Transform target;
 
 	// Use this for initialization
@@ -45,14 +46,19 @@ public class Ball : MonoBehaviour
 			Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
 			transform.LookAt(targetPosition);
 			SetCameraPosition();
+			SetArrowPosition();
 		}
 		if (AnyMoveKeyDown())
+		{
 			_camera.canMove = true;
+			arrow.SetActive(false);
+		}
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			if (_camera.canMove)
 			{
 				_camera.canMove = false;
+				arrow.SetActive(true);
 				SetCameraPosition();
 			}
 			else if (!_camera.canMove && !_startMeter)
@@ -94,7 +100,26 @@ public class Ball : MonoBehaviour
 		Vector3 ballPos = transform.position;
 		transform.Rotate(0, dir * Time.deltaTime, 0);
 		RotateCamera(ballPos);
+		RotateArrow(ballPos);
 		Debug.Log("_camera.transform.position: " + _camera.transform.position);
+	}
+
+	private void RotateArrow(Vector3 ballPos)
+	{
+		float offsetY = 0.0f;
+		while (transform.position.y + offsetY < 112)
+		{
+			offsetY += 1;
+		}
+		while (transform.position.y + offsetY > 112)
+		{
+			offsetY -= 1;
+		}
+		Vector3 offset = arrow.transform.position - ballPos;
+		arrow.transform.position = new Vector3(ballPos.x, ballPos.y, ballPos.z) + (transform.forward * 50);
+		arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y + offsetY, arrow.transform.position.z);
+		arrow.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
+		arrow.transform.Rotate(18, 0, 0);
 	}
 
 	private void RotateCamera(Vector3 ballPos)
@@ -129,6 +154,23 @@ public class Ball : MonoBehaviour
 		Vector3 offset = _camera.transform.position - ballPos;
 		_camera.transform.position = new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z) + (-transform.forward * 8);
 		_camera.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
+	}
+
+	private void SetArrowPosition()
+	{
+		Vector3 ballPos = transform.position;
+		float offsetY = 0.0f;
+		while (transform.position.y + offsetY < 112)
+		{
+			offsetY += 1;
+		}
+		while (transform.position.y + offsetY > 112)
+		{
+			offsetY -= 1;
+		}
+		Vector3 offset = arrow.transform.position - ballPos;
+		arrow.transform.position = new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z) + (-transform.forward * 8);
+		arrow.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
 	}
 
 	private void BallMeter()

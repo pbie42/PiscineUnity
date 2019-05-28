@@ -219,6 +219,7 @@ MonoBehaviour:
   forceMaxZ: 3000
   forceMinY: 50
   forceMinZ: 50
+  arrow: {fileID: 1244148397}
   target: {fileID: 1922898607}
 --- !u!1001 &311356871
 Prefab:
@@ -601,6 +602,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1244148397 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 111070, guid: 3f26d77dd8d39a84da1efa4587da379d, type: 2}
+  m_PrefabInternal: {fileID: 311356871}
 --- !u!1 &1461994372
 GameObject:
   m_ObjectHideFlags: 0
