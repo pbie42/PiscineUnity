@@ -93,6 +93,12 @@ public class Ball : MonoBehaviour
 	{
 		Vector3 ballPos = transform.position;
 		transform.Rotate(0, dir * Time.deltaTime, 0);
+		RotateCamera(ballPos);
+		Debug.Log("_camera.transform.position: " + _camera.transform.position);
+	}
+
+	private void RotateCamera(Vector3 ballPos)
+	{
 		float offsetY = 0.0f;
 		while (transform.position.y + offsetY < 104)
 		{
@@ -106,8 +112,6 @@ public class Ball : MonoBehaviour
 		_camera.transform.position = new Vector3(ballPos.x, ballPos.y, ballPos.z) + (-transform.forward * 8);
 		_camera.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y + offsetY, _camera.transform.position.z);
 		_camera.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
-		Debug.Log("offsetY: " + offsetY);
-		Debug.Log("_camera.transform.position: " + _camera.transform.position);
 	}
 
 	private void SetCameraPosition()
