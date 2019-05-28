@@ -10,6 +10,10 @@ public class Ball : MonoBehaviour
 	public Club iron;
 	public GameObject tee2;
 	public GameObject tee3;
+	public GameObject hole1;
+	public GameObject hole2;
+	public GameObject hole3;
+	private GameObject _targetHole;
 	private Club _currentClub;
 	private bool _grounded = true;
 	private bool _increase = true;
@@ -19,6 +23,7 @@ public class Ball : MonoBehaviour
 	private float _forceZ = 0.0f;
 	private FlyCam _camera;
 	private int _shots = 0;
+	private int _currentHole = 0;
 	private int _clubNum = 0;
 	private Rigidbody _rgbd;
 	private Vector3 _ballPos;
@@ -29,6 +34,7 @@ public class Ball : MonoBehaviour
 	public Canvas _between;
 
 	public bool _hit = false;
+	public bool _holeDone = false;
 	public float forceIncrease;
 	public float forceMaxY;
 	public float forceMaxZ;
@@ -37,6 +43,10 @@ public class Ball : MonoBehaviour
 	public GameObject arrow;
 	public UnityEngine.UI.Image powerBar;
 	public UnityEngine.UI.Text shotsText;
+	public UnityEngine.UI.Text shotsHole1;
+	public UnityEngine.UI.Text shotsHole2;
+	public UnityEngine.UI.Text shotsHole3;
+	public UnityEngine.UI.Text shotsBetween;
 	public UnityEngine.UI.Text clubText;
 	public Transform target;
 
@@ -52,7 +62,11 @@ public class Ball : MonoBehaviour
 		RotateCamera();
 		RotateArrow();
 		shotsText.text = "Shots: " + _shots;
+		shotsHole1.text = "-";
+		shotsHole2.text = "-";
+		shotsHole3.text = "-";
 		powerBar.fillAmount = 0;
+		_targetHole = hole1;
 	}
 
 	// Update is called once per frame
@@ -60,50 +74,53 @@ public class Ball : MonoBehaviour
 	{
 		_ballPos = transform.position;
 		float zVel = transform.InverseTransformDirection(_rgbd.velocity).z;
-		if (_hit && (zVel >= -1 && zVel <= 0 || zVel <= -0.0001))
-			StopBall();
-		if (AnyMoveKeyDown())
+		if (!_holeDone)
 		{
-			_camera.canMove = true;
-			arrow.SetActive(false);
-			_canvas.gameObject.SetActive(false);
-		}
-		if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.RightArrow))
-		{
-			NextClub();
-		}
-		if (Input.GetKey(KeyCode.Tab))
-			_card.gameObject.SetActive(true);
-		else
-			_card.gameObject.SetActive(false);
-		if (_canShoot)
-		{
-			if (Input.GetKeyDown(KeyCode.Space))
+			if (_hit && (zVel >= -1 && zVel <= 0 || zVel <= -0.0001))
+				StopBall();
+			if (AnyMoveKeyDown())
 			{
-				if (_camera.canMove)
-				{
-					_camera.canMove = false;
-					arrow.SetActive(true);
-					_canvas.gameObject.SetActive(true);
-					RotateCamera();
-				}
-				else if (!_camera.canMove && !_startMeter)
-					_startMeter = true;
-				else if (!_camera.canMove && _startMeter)
-				{
-					_hit = true;
-					_grounded = false;
-					_canShoot = false;
-					HitBall();
-					_startMeter = false;
-				}
+				_camera.canMove = true;
+				arrow.SetActive(false);
+				_canvas.gameObject.SetActive(false);
 			}
-			if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.A))
-				RotateBall(-50f);
-			if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.D))
-				RotateBall(50f);
-			if (_startMeter)
-				BetterBallMeter();
+			if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				NextClub();
+			}
+			if (Input.GetKey(KeyCode.Tab))
+				_card.gameObject.SetActive(true);
+			else
+				_card.gameObject.SetActive(false);
+			if (_canShoot)
+			{
+				if (Input.GetKeyDown(KeyCode.Space))
+				{
+					if (_camera.canMove)
+					{
+						_camera.canMove = false;
+						arrow.SetActive(true);
+						_canvas.gameObject.SetActive(true);
+						RotateCamera();
+					}
+					else if (!_camera.canMove && !_startMeter)
+						_startMeter = true;
+					else if (!_camera.canMove && _startMeter)
+					{
+						_hit = true;
+						_grounded = false;
+						_canShoot = false;
+						HitBall();
+						_startMeter = false;
+					}
+				}
+				if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.A))
+					RotateBall(-50f);
+				if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.D))
+					RotateBall(50f);
+				if (_startMeter)
+					BetterBallMeter();
+			}
 		}
 	}
 
@@ -149,6 +166,7 @@ public class Ball : MonoBehaviour
 		_rgbd.AddForce(transform.forward * _forceZ);
 		_rgbd.AddForce(transform.up * _forceY);
 		_shots++;
+		MarkCard();
 		shotsText.text = "Shots: " + _shots;
 		_forceY = 0.0f;
 		_forceZ = 0.0f;
@@ -272,6 +290,16 @@ public class Ball : MonoBehaviour
 		_hit = false;
 	}
 
+	private void MarkCard()
+	{
+		if (_currentHole == 0)
+			shotsHole1.text = "" + _shots;
+		if (_currentHole == 1)
+			shotsHole2.text = "" + _shots;
+		if (_currentHole == 2)
+			shotsHole3.text = "" + _shots;
+	}
+
 	private void OnCollisionEnter(Collision other)
 	{
 		Debug.Log("other.gameObject.name: " + other.gameObject.name);
@@ -279,6 +307,12 @@ public class Ball : MonoBehaviour
 			_grounded = true;
 		if (other.gameObject.layer == 4)
 			ResetHole();
+		if (GameObject.ReferenceEquals(other.gameObject, _targetHole))
+		{
+			_canvas.gameObject.SetActive(false);
+			_holeDone = true;
+			_between.gameObject.SetActive(true);
+		}
 	}
 
 	private void OnCollisionExit(Collision other)
