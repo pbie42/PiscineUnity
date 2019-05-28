@@ -11,6 +11,7 @@ public class FlyCam : MonoBehaviour
 	public float normalMoveSpeed = 10;
 	public float slowMoveFactor = 0.25f;
 	public float fastMoveFactor = 3;
+	public bool canMove = false;
 
 	private float rotationX = 0.0f;
 	private float rotationY = 0.0f;
@@ -23,20 +24,18 @@ public class FlyCam : MonoBehaviour
 
 	void Update()
 	{
-		// rotationX += Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
-		// rotationY += Input.GetAxis("Mouse Y") * cameraSensitivity * Time.deltaTime;
-		// rotationY = Mathf.Clamp(rotationY, -90, 90);
 
-		// transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
-		// transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
-
-		float camY = transform.position.y;
-		float camX = transform.position.x;
-		float camZ = transform.position.z;
-
-		if (ball._hit)
+		if (canMove)
 		{
-			Debug.Log("Ball is hit");
+			rotationX += Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
+			rotationY += Input.GetAxis("Mouse Y") * cameraSensitivity * Time.deltaTime;
+			rotationY = Mathf.Clamp(rotationY, -90, 90);
+
+			transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
+			transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
+			float camY = transform.position.y;
+			float camX = transform.position.x;
+			float camZ = transform.position.z;
 			if (camY >= 104 && camY <= 160 && camX <= 456 && camX >= 50 && camZ >= 40 && camZ <= 440)
 			{
 				if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))

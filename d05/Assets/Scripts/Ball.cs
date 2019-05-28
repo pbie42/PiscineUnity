@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-	private Camera _camera;
-	public Transform target;
-	private Rigidbody _rgbd;
-	private Vector3 _direction;
+	private bool _grounded = true;
 	private bool _increase = true;
+	private bool _startMeter = false;
 	private float _forceY = 0.0f;
 	private float _forceZ = 0.0f;
+	private FlyCam _camera;
+	private Rigidbody _rgbd;
+	private Vector3 _direction;
+	private Vector3 _startPos;
+
+	public bool _hit = false;
 	public float forceIncrease;
 	public float forceMaxY;
-	public float forceMinY;
 	public float forceMaxZ;
+	public float forceMinY;
 	public float forceMinZ;
-	public bool _hit = false;
-	private bool _grounded = true;
-	private bool _startMeter = false;
-	private Vector3 _startPos;
+	public Transform target;
 
 	// Use this for initialization
 	void Start()
 	{
 		_rgbd = gameObject.GetComponent<Rigidbody>();
-		_camera = GameObject.FindObjectOfType<Camera>();
+		_camera = GameObject.FindObjectOfType<FlyCam>();
 		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
 		transform.LookAt(targetPosition);
 		_startPos = transform.position;
@@ -45,32 +46,47 @@ public class Ball : MonoBehaviour
 			transform.LookAt(targetPosition);
 			SetCameraPosition();
 		}
+		if (AnyMoveKeyDown())
+			_camera.canMove = true;
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			SetCameraPosition();
-			if (!_startMeter)
+			if (_camera.canMove)
+			{
+				_camera.canMove = false;
+				SetCameraPosition();
+			}
+			else if (!_camera.canMove && !_startMeter)
 				_startMeter = true;
-			else if (_startMeter)
+			else if (!_camera.canMove && _startMeter)
+			{
+				_hit = true;
+				_grounded = false;
+				HitBall();
 				_startMeter = false;
+			}
 		}
-		if (!_startMeter && Input.GetKeyUp(KeyCode.Space))
-		{
-			_startMeter = false;
-			_hit = true;
-			_grounded = false;
-			Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-			_rgbd.AddForce(transform.forward * _forceZ);
-			_rgbd.AddForce(transform.up * _forceY);
-			_forceY = 0.0f;
-			_forceZ = 0.0f;
-		}
-		if (!_hit && _grounded && Input.GetKey(KeyCode.A))
+		if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.A))
 			RotateBall(-50f);
-		if (!_hit && _grounded && Input.GetKey(KeyCode.D))
+		if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.D))
 			RotateBall(50f);
-
 		if (_startMeter)
 			BallMeter();
+	}
+
+	private void HitBall()
+	{
+		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+		_rgbd.AddForce(transform.forward * _forceZ);
+		_rgbd.AddForce(transform.up * _forceY);
+		_forceY = 0.0f;
+		_forceZ = 0.0f;
+	}
+
+	private bool AnyMoveKeyDown()
+	{
+		if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+			return true;
+		return false;
 	}
 
 	private void RotateBall(float dir)
