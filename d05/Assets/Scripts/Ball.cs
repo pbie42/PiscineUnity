@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour
 	private float _forceZ = 0.0f;
 	private FlyCam _camera;
 	private Rigidbody _rgbd;
+	private Vector3 _ballPos;
 	private Vector3 _direction;
 	private Vector3 _startPos;
 
@@ -21,6 +22,7 @@ public class Ball : MonoBehaviour
 	public float forceMinY;
 	public float forceMinZ;
 	public GameObject arrow;
+	public UnityEngine.UI.Image powerBar;
 	public Transform target;
 
 	// Use this for initialization
@@ -28,25 +30,30 @@ public class Ball : MonoBehaviour
 	{
 		_rgbd = gameObject.GetComponent<Rigidbody>();
 		_camera = GameObject.FindObjectOfType<FlyCam>();
-		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-		transform.LookAt(targetPosition);
+		LookAtTarget();
 		_startPos = transform.position;
-		SetCameraPosition();
+		_ballPos = _startPos;
+		RotateCamera();
+		RotateArrow();
+		powerBar.fillAmount = 0;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		_ballPos = transform.position;
 		float zVel = transform.InverseTransformDirection(_rgbd.velocity).z;
 		if (_hit && (zVel >= -1 && zVel <= 0 || zVel <= -0.0001))
 		{
 			_rgbd.velocity = Vector3.zero;
 			_rgbd.freezeRotation = true;
 			_hit = false;
-			Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-			transform.LookAt(targetPosition);
-			SetCameraPosition();
-			SetArrowPosition();
+			LookAtTarget();
+			arrow.SetActive(true);
+			_camera.canMove = false;
+			powerBar.fillAmount = 0;
+			RotateCamera();
+			RotateArrow();
 		}
 		if (AnyMoveKeyDown())
 		{
@@ -59,7 +66,7 @@ public class Ball : MonoBehaviour
 			{
 				_camera.canMove = false;
 				arrow.SetActive(true);
-				SetCameraPosition();
+				RotateCamera();
 			}
 			else if (!_camera.canMove && !_startMeter)
 				_startMeter = true;
@@ -79,32 +86,29 @@ public class Ball : MonoBehaviour
 			BallMeter();
 	}
 
-	private void HitBall()
+	private void LookAtTarget()
 	{
 		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+		transform.LookAt(targetPosition);
+	}
+
+	private void HitBall()
+	{
 		_rgbd.AddForce(transform.forward * _forceZ);
 		_rgbd.AddForce(transform.up * _forceY);
 		_forceY = 0.0f;
 		_forceZ = 0.0f;
 	}
 
-	private bool AnyMoveKeyDown()
-	{
-		if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
-			return true;
-		return false;
-	}
-
 	private void RotateBall(float dir)
 	{
-		Vector3 ballPos = transform.position;
 		transform.Rotate(0, dir * Time.deltaTime, 0);
-		RotateCamera(ballPos);
-		RotateArrow(ballPos);
+		RotateCamera();
+		RotateArrow();
 		Debug.Log("_camera.transform.position: " + _camera.transform.position);
 	}
 
-	private void RotateArrow(Vector3 ballPos)
+	private void RotateArrow()
 	{
 		float offsetY = 0.0f;
 		while (transform.position.y + offsetY < 112)
@@ -115,14 +119,14 @@ public class Ball : MonoBehaviour
 		{
 			offsetY -= 1;
 		}
-		Vector3 offset = arrow.transform.position - ballPos;
-		arrow.transform.position = new Vector3(ballPos.x, ballPos.y, ballPos.z) + (transform.forward * 50);
+		Vector3 offset = arrow.transform.position - _ballPos;
+		arrow.transform.position = new Vector3(_ballPos.x, _ballPos.y, _ballPos.z) + (transform.forward * 50);
 		arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y + offsetY, arrow.transform.position.z);
-		arrow.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
+		arrow.transform.LookAt(new Vector3(_ballPos.x, _ballPos.y + offsetY, _ballPos.z));
 		arrow.transform.Rotate(18, 0, 0);
 	}
 
-	private void RotateCamera(Vector3 ballPos)
+	private void RotateCamera()
 	{
 		float offsetY = 0.0f;
 		while (transform.position.y + offsetY < 104)
@@ -133,44 +137,10 @@ public class Ball : MonoBehaviour
 		{
 			offsetY -= 1;
 		}
-		Vector3 offset = _camera.transform.position - ballPos;
-		_camera.transform.position = new Vector3(ballPos.x, ballPos.y, ballPos.z) + (-transform.forward * 8);
+		Vector3 offset = _camera.transform.position - _ballPos;
+		_camera.transform.position = new Vector3(_ballPos.x, _ballPos.y, _ballPos.z) + (-transform.forward * 8);
 		_camera.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y + offsetY, _camera.transform.position.z);
-		_camera.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
-	}
-
-	private void SetCameraPosition()
-	{
-		Vector3 ballPos = transform.position;
-		float offsetY = 0.0f;
-		while (transform.position.y + offsetY < 104)
-		{
-			offsetY += 1;
-		}
-		while (transform.position.y + offsetY > 104)
-		{
-			offsetY -= 1;
-		}
-		Vector3 offset = _camera.transform.position - ballPos;
-		_camera.transform.position = new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z) + (-transform.forward * 8);
-		_camera.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
-	}
-
-	private void SetArrowPosition()
-	{
-		Vector3 ballPos = transform.position;
-		float offsetY = 0.0f;
-		while (transform.position.y + offsetY < 112)
-		{
-			offsetY += 1;
-		}
-		while (transform.position.y + offsetY > 112)
-		{
-			offsetY -= 1;
-		}
-		Vector3 offset = arrow.transform.position - ballPos;
-		arrow.transform.position = new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z) + (-transform.forward * 8);
-		arrow.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
+		_camera.transform.LookAt(new Vector3(_ballPos.x, _ballPos.y + offsetY, _ballPos.z));
 	}
 
 	private void BallMeter()
@@ -197,12 +167,27 @@ public class Ball : MonoBehaviour
 		{
 			_increase = true;
 		}
+		powerBar.fillAmount = _forceY / forceMaxY;
 	}
 
-	private void FollowBallTurn()
+	private bool AnyMoveKeyDown()
 	{
-		_camera.transform.LookAt(transform.position);
-		_camera.transform.Translate(Vector3.right * Time.deltaTime);
+		if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+			return true;
+		return false;
+	}
+
+	private void ResetHole()
+	{
+		transform.position = _startPos;
+		_ballPos = _startPos;
+		_rgbd.velocity = Vector3.zero;
+		_rgbd.freezeRotation = true;
+		LookAtTarget();
+		RotateCamera();
+		RotateArrow();
+		powerBar.fillAmount = 0;
+		_hit = false;
 	}
 
 	private void OnCollisionEnter(Collision other)
@@ -215,16 +200,6 @@ public class Ball : MonoBehaviour
 			Debug.Log("RESET HOLE!!!!!!!!!!!!!!!!!");
 			ResetHole();
 		}
-	}
-
-	private void ResetHole()
-	{
-		transform.position = _startPos;
-		_rgbd.velocity = Vector3.zero;
-		_rgbd.freezeRotation = true;
-		Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-		transform.LookAt(targetPosition);
-		_hit = false;
 	}
 
 	private void OnCollisionExit(Collision other)
