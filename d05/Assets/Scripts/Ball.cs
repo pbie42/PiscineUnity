@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-	public Club putter;
-	public Club wood;
-	public Club wedge;
-	public Club iron;
-	public GameObject tee2;
-	public GameObject tee3;
-	public GameObject hole1;
-	public GameObject hole2;
-	public GameObject hole3;
-	private GameObject _targetHole;
-	private Club _currentClub;
+	private bool _canShoot = true;
 	private bool _grounded = true;
 	private bool _increase = true;
 	private bool _startMeter = false;
-	private bool _canShoot = true;
+	private Club _currentClub;
 	private float _forceY = 0.0f;
 	private float _forceZ = 0.0f;
 	private FlyCam _camera;
-	private int _shots = 0;
-	private int _currentHole = 0;
+	private Hole _targetHole;
 	private int _clubNum = 0;
+	private int _shots = 0;
 	private Rigidbody _rgbd;
 	private Vector3 _ballPos;
 	private Vector3 _direction;
 	private Vector3 _startPos;
+	private Vector3 _hole1Pos;
+	public Canvas _between;
 	public Canvas _canvas;
 	public Canvas _card;
-	public Canvas _between;
+	public Club iron;
+	public Club putter;
+	public Club wedge;
+	public Club wood;
+	public Hole hole1;
+	public Hole hole2;
+	public Hole hole3;
+	public GameObject tee2;
+	public GameObject tee3;
 
 	public bool _hit = false;
 	public bool _holeDone = false;
-	public float forceIncrease;
+	private float forceIncrease = 100f;
 	public float forceMaxY;
 	public float forceMaxZ;
 	public float forceMinY;
@@ -47,7 +47,11 @@ public class Ball : MonoBehaviour
 	public UnityEngine.UI.Text shotsHole2;
 	public UnityEngine.UI.Text shotsHole3;
 	public UnityEngine.UI.Text shotsBetween;
+	public UnityEngine.UI.Text scoreBetween;
 	public UnityEngine.UI.Text clubText;
+	public UnityEngine.UI.Text holeNumBetween;
+	public UnityEngine.UI.Text holeParBetween;
+	public UnityEngine.UI.Text holeMain;
 	public Transform target;
 
 	// Use this for initialization
@@ -58,6 +62,7 @@ public class Ball : MonoBehaviour
 		_currentClub = wood;
 		LookAtTarget();
 		_startPos = transform.position;
+		_hole1Pos = transform.position;
 		_ballPos = _startPos;
 		RotateCamera();
 		RotateArrow();
@@ -67,6 +72,7 @@ public class Ball : MonoBehaviour
 		shotsHole3.text = "-";
 		powerBar.fillAmount = 0;
 		_targetHole = hole1;
+		holeMain.text = "Hole: " + _targetHole.holeNumber + "\nPar: " + _targetHole.par;
 	}
 
 	// Update is called once per frame
@@ -122,6 +128,47 @@ public class Ball : MonoBehaviour
 					BetterBallMeter();
 			}
 		}
+		else if (_holeDone && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
+		{
+			if (_targetHole.holeNumber == 1)
+			{
+				_targetHole.holeNumber = 1;
+				_startPos = tee2.transform.position;
+				transform.position = _startPos;
+				_ballPos = _startPos;
+				target = hole2.transform;
+				_targetHole = hole2;
+			}
+			else if (_targetHole.holeNumber == 2)
+			{
+				_targetHole.holeNumber = 2;
+				_startPos = tee3.transform.position;
+				transform.position = _startPos;
+				_ballPos = _startPos;
+				target = hole3.transform;
+				_targetHole = hole3;
+			}
+			else if (_targetHole.holeNumber == 3)
+			{
+				_targetHole.holeNumber = 1;
+				_startPos = _hole1Pos;
+				transform.position = _startPos;
+				_ballPos = _startPos;
+				target = hole1.transform;
+				_targetHole = hole1;
+			}
+			holeMain.text = "Hole: " + _targetHole.holeNumber + "\nPar: " + _targetHole.par;
+			_camera.canMove = false;
+			_canShoot = true;
+			_startMeter = false;
+			_grounded = true;
+			_hit = false;
+			_shots = 0;
+			_between.gameObject.SetActive(false);
+			_canvas.gameObject.SetActive(true);
+			_holeDone = false;
+			ResetHole();
+		}
 	}
 
 	private void NextClub()
@@ -166,6 +213,7 @@ public class Ball : MonoBehaviour
 		_rgbd.AddForce(transform.forward * _forceZ);
 		_rgbd.AddForce(transform.up * _forceY);
 		_shots++;
+		_startMeter = false;
 		MarkCard();
 		shotsText.text = "Shots: " + _shots;
 		_forceY = 0.0f;
@@ -201,11 +249,11 @@ public class Ball : MonoBehaviour
 	private void RotateCamera()
 	{
 		float offsetY = 0.0f;
-		while (transform.position.y + offsetY < 104)
+		while (transform.position.y + offsetY < 105)
 		{
 			offsetY += 1;
 		}
-		while (transform.position.y + offsetY > 104)
+		while (transform.position.y + offsetY > 105)
 		{
 			offsetY -= 1;
 		}
@@ -215,35 +263,15 @@ public class Ball : MonoBehaviour
 		_camera.transform.LookAt(new Vector3(_ballPos.x, _ballPos.y + offsetY, _ballPos.z));
 	}
 
-	private void BallMeter()
-	{
-		if (_increase && _forceY <= forceMaxY && _forceZ <= forceMaxZ)
-		{
-			_forceY += forceIncrease;
-			_forceZ += forceIncrease;
-			Debug.Log("_forceY: " + _forceY);
-			Debug.Log("_forceZ: " + _forceZ);
-		}
-		if (_increase && _forceY > forceMaxY && _forceZ > forceMaxZ)
-		{
-			_increase = false;
-		}
-		if (!_increase && _forceY >= forceMinY && _forceZ >= forceMinZ)
-		{
-			_forceY -= forceIncrease;
-			_forceZ -= forceIncrease;
-			Debug.Log("_forceY: " + _forceY);
-			Debug.Log("_forceZ: " + _forceZ);
-		}
-		if (!_increase && _forceY < forceMinY && _forceZ < forceMinZ)
-		{
-			_increase = true;
-		}
-		powerBar.fillAmount = _forceY / forceMaxY;
-	}
-
 	private void BetterBallMeter()
 	{
+		Debug.Log("_currentClub.name: " + _currentClub.name);
+		if (_currentClub.name == "Wedge")
+		{
+			forceIncrease = 50f;
+		}
+		else
+			forceIncrease = 100f;
 		if (_increase && _forceZ <= _currentClub.maxZ)
 		{
 			_forceZ += forceIncrease;
@@ -286,39 +314,68 @@ public class Ball : MonoBehaviour
 		LookAtTarget();
 		RotateCamera();
 		RotateArrow();
+		StopBall();
 		powerBar.fillAmount = 0;
 		_hit = false;
 	}
 
 	private void MarkCard()
 	{
-		if (_currentHole == 0)
+		if (_targetHole.holeNumber == 1)
 			shotsHole1.text = "" + _shots;
-		if (_currentHole == 1)
+		if (_targetHole.holeNumber == 2)
 			shotsHole2.text = "" + _shots;
-		if (_currentHole == 2)
+		if (_targetHole.holeNumber == 3)
 			shotsHole3.text = "" + _shots;
 	}
 
 	private void OnCollisionEnter(Collision other)
 	{
-		Debug.Log("other.gameObject.name: " + other.gameObject.name);
+		Debug.Log("other.gameObject: " + other.gameObject);
+		Debug.Log("_targetHole: " + _targetHole);
 		if (other.gameObject.name == "Terrain")
 			_grounded = true;
 		if (other.gameObject.layer == 4)
 			ResetHole();
-		if (GameObject.ReferenceEquals(other.gameObject, _targetHole))
+		if (other.gameObject.tag == "Hole")
 		{
-			_canvas.gameObject.SetActive(false);
-			_holeDone = true;
-			_between.gameObject.SetActive(true);
+			Hole hitHole = other.gameObject.GetComponent<Hole>();
+			Debug.Log("hitHole.holeNumber: " + hitHole.holeNumber);
+			Debug.Log("_targetHole.holeNumber: " + _targetHole.holeNumber);
+			if (hitHole.holeNumber == _targetHole.holeNumber)
+			{
+				HandleBetweenScreen();
+			}
 		}
+	}
+
+	private void HandleBetweenScreen()
+	{
+		_canvas.gameObject.SetActive(false);
+		_holeDone = true;
+		shotsBetween.text = "Shots: " + _shots;
+		if (_targetHole.par - _shots == 1)
+			scoreBetween.text = "You got a birdie!";
+		else if (_targetHole.par - _shots == 2)
+			scoreBetween.text = "You got an eagle!";
+		else if (_targetHole.par - _shots == 0)
+			scoreBetween.text = "You got Par!";
+		else if (_targetHole.par - _shots == -1)
+			scoreBetween.text = "You got a Bogey!";
+		else if (_targetHole.par - _shots == -2)
+			scoreBetween.text = "You got a double Bogey!";
+		else if (_targetHole.par - _shots == -3)
+			scoreBetween.text = "You got a triple Bogey!";
+		else
+			scoreBetween.text = "You got a +" + ((_targetHole.par - _shots) * -1);
+		holeNumBetween.text = "Hole: " + _targetHole.holeNumber;
+		holeParBetween.text = "Par: " + _targetHole.par;
+		_between.gameObject.SetActive(true);
 	}
 
 	private void OnCollisionExit(Collision other)
 	{
 		_forceY = 0.0f;
 		_forceZ = 0.0f;
-		Debug.Log("other.gameObject.name: " + other.gameObject.name);
 	}
 }
