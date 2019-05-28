@@ -20,6 +20,7 @@ public class Ball : MonoBehaviour
 	private Vector3 _direction;
 	private Vector3 _startPos;
 	private Vector3 _hole1Pos;
+	private Vector3 _prevPos;
 	public Canvas _between;
 	public Canvas _canvas;
 	public Canvas _card;
@@ -64,6 +65,7 @@ public class Ball : MonoBehaviour
 		_startPos = transform.position;
 		_hole1Pos = transform.position;
 		_ballPos = _startPos;
+		_prevPos = _startPos;
 		RotateCamera();
 		RotateArrow();
 		shotsText.text = "Shots: " + _shots;
@@ -80,6 +82,13 @@ public class Ball : MonoBehaviour
 	{
 		_ballPos = transform.position;
 		float zVel = transform.InverseTransformDirection(_rgbd.velocity).z;
+
+		if (_ballPos.x > 456 || _ballPos.x < 50 || _ballPos.z < 40 || _ballPos.z >= 440)
+		{
+			_ballPos = _prevPos;
+			transform.position = _ballPos;
+			StopBall();
+		}
 		if (!_holeDone)
 		{
 			if (_hit && (zVel >= -1 && zVel <= 0 || zVel <= -0.0001))
@@ -198,6 +207,7 @@ public class Ball : MonoBehaviour
 		_canvas.gameObject.SetActive(true);
 		_camera.canMove = false;
 		powerBar.fillAmount = 0;
+		_prevPos = transform.position;
 		RotateCamera();
 		RotateArrow();
 	}
@@ -225,7 +235,6 @@ public class Ball : MonoBehaviour
 		transform.Rotate(0, dir * Time.deltaTime, 0);
 		RotateCamera();
 		RotateArrow();
-		Debug.Log("_camera.transform.position: " + _camera.transform.position);
 	}
 
 	private void RotateArrow()
@@ -257,15 +266,27 @@ public class Ball : MonoBehaviour
 		{
 			offsetY -= 1;
 		}
+		Vector3 camPos = _camera.transform.position;
 		Vector3 offset = _camera.transform.position - _ballPos;
 		_camera.transform.position = new Vector3(_ballPos.x, _ballPos.y, _ballPos.z) + (-transform.forward * 8);
 		_camera.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y + offsetY, _camera.transform.position.z);
+		if (camPos.y < 104)
+			_camera.transform.position = new Vector3(_camera.transform.position.x, 104, _camera.transform.position.z);
+		else if (camPos.y > 160)
+			_camera.transform.position = new Vector3(_camera.transform.position.x, 160, _camera.transform.position.z);
+		else if (camPos.x > 456)
+			_camera.transform.position = new Vector3(456, _camera.transform.position.y, _camera.transform.position.z);
+		else if (camPos.x < 50)
+			_camera.transform.position = new Vector3(50, _camera.transform.position.y, _camera.transform.position.z);
+		else if (camPos.z < 40)
+			_camera.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y, 40);
+		else if (camPos.z >= 440)
+			_camera.transform.position = new Vector3(transform.position.x, transform.position.y, 440);
 		_camera.transform.LookAt(new Vector3(_ballPos.x, _ballPos.y + offsetY, _ballPos.z));
 	}
 
 	private void BetterBallMeter()
 	{
-		Debug.Log("_currentClub.name: " + _currentClub.name);
 		if (_currentClub.name == "Wedge")
 		{
 			forceIncrease = 50f;
@@ -273,25 +294,13 @@ public class Ball : MonoBehaviour
 		else
 			forceIncrease = 100f;
 		if (_increase && _forceZ <= _currentClub.maxZ)
-		{
 			_forceZ += forceIncrease;
-			Debug.Log("_forceY: " + _forceY);
-			Debug.Log("_forceZ: " + _forceZ);
-		}
 		if (_increase && _forceZ > _currentClub.maxZ)
-		{
 			_increase = false;
-		}
 		if (!_increase && _forceZ >= _currentClub.minZ)
-		{
 			_forceZ -= forceIncrease;
-			Debug.Log("_forceY: " + _forceY);
-			Debug.Log("_forceZ: " + _forceZ);
-		}
 		if (!_increase && _forceZ < _currentClub.minZ)
-		{
 			_increase = true;
-		}
 		float forcePercentage = _forceZ / _currentClub.maxZ;
 		powerBar.fillAmount = forcePercentage;
 		_forceY = _currentClub.maxY * forcePercentage;
@@ -331,8 +340,6 @@ public class Ball : MonoBehaviour
 
 	private void OnCollisionEnter(Collision other)
 	{
-		Debug.Log("other.gameObject: " + other.gameObject);
-		Debug.Log("_targetHole: " + _targetHole);
 		if (other.gameObject.name == "Terrain")
 			_grounded = true;
 		if (other.gameObject.layer == 4)
@@ -340,12 +347,8 @@ public class Ball : MonoBehaviour
 		if (other.gameObject.tag == "Hole")
 		{
 			Hole hitHole = other.gameObject.GetComponent<Hole>();
-			Debug.Log("hitHole.holeNumber: " + hitHole.holeNumber);
-			Debug.Log("_targetHole.holeNumber: " + _targetHole.holeNumber);
 			if (hitHole.holeNumber == _targetHole.holeNumber)
-			{
 				HandleBetweenScreen();
-			}
 		}
 	}
 
