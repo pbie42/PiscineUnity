@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+	public Club putter;
+	public Club wood;
+	public Club wedge;
+	public Club iron;
+	private Club _currentClub;
 	private bool _grounded = true;
 	private bool _increase = true;
 	private bool _startMeter = false;
+	private bool _canShoot = true;
 	private float _forceY = 0.0f;
 	private float _forceZ = 0.0f;
 	private FlyCam _camera;
+	private int _shots = 0;
+	private int _clubNum = 0;
 	private Rigidbody _rgbd;
 	private Vector3 _ballPos;
 	private Vector3 _direction;
@@ -24,6 +32,8 @@ public class Ball : MonoBehaviour
 	public float forceMinZ;
 	public GameObject arrow;
 	public UnityEngine.UI.Image powerBar;
+	public UnityEngine.UI.Text shotsText;
+	public UnityEngine.UI.Text clubText;
 	public Transform target;
 
 	// Use this for initialization
@@ -32,11 +42,13 @@ public class Ball : MonoBehaviour
 		_rgbd = gameObject.GetComponent<Rigidbody>();
 		_camera = GameObject.FindObjectOfType<FlyCam>();
 		_canvas = GameObject.FindObjectOfType<Canvas>();
+		_currentClub = wood;
 		LookAtTarget();
 		_startPos = transform.position;
 		_ballPos = _startPos;
 		RotateCamera();
 		RotateArrow();
+		shotsText.text = "Shots: " + _shots;
 		powerBar.fillAmount = 0;
 	}
 
@@ -46,49 +58,77 @@ public class Ball : MonoBehaviour
 		_ballPos = transform.position;
 		float zVel = transform.InverseTransformDirection(_rgbd.velocity).z;
 		if (_hit && (zVel >= -1 && zVel <= 0 || zVel <= -0.0001))
-		{
-			_rgbd.velocity = Vector3.zero;
-			_rgbd.freezeRotation = true;
-			_hit = false;
-			LookAtTarget();
-			arrow.SetActive(true);
-			_canvas.gameObject.SetActive(true);
-			_camera.canMove = false;
-			powerBar.fillAmount = 0;
-			RotateCamera();
-			RotateArrow();
-		}
+			StopBall();
 		if (AnyMoveKeyDown())
 		{
 			_camera.canMove = true;
 			arrow.SetActive(false);
 			_canvas.gameObject.SetActive(false);
 		}
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			if (_camera.canMove)
-			{
-				_camera.canMove = false;
-				arrow.SetActive(true);
-				_canvas.gameObject.SetActive(true);
-				RotateCamera();
-			}
-			else if (!_camera.canMove && !_startMeter)
-				_startMeter = true;
-			else if (!_camera.canMove && _startMeter)
-			{
-				_hit = true;
-				_grounded = false;
-				HitBall();
-				_startMeter = false;
-			}
+			NextClub();
 		}
-		if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.A))
-			RotateBall(-50f);
-		if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.D))
-			RotateBall(50f);
-		if (_startMeter)
-			BallMeter();
+		if (_canShoot)
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				if (_camera.canMove)
+				{
+					_camera.canMove = false;
+					arrow.SetActive(true);
+					_canvas.gameObject.SetActive(true);
+					RotateCamera();
+				}
+				else if (!_camera.canMove && !_startMeter)
+					_startMeter = true;
+				else if (!_camera.canMove && _startMeter)
+				{
+					_hit = true;
+					_grounded = false;
+					_canShoot = false;
+					HitBall();
+					_startMeter = false;
+				}
+			}
+			if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.A))
+				RotateBall(-50f);
+			if (!_camera.canMove && !_hit && _grounded && Input.GetKey(KeyCode.D))
+				RotateBall(50f);
+			if (_startMeter)
+				BetterBallMeter();
+		}
+	}
+
+	private void NextClub()
+	{
+		_clubNum++;
+		if (_clubNum >= 4)
+			_clubNum = 0;
+		if (_clubNum == 0)
+			_currentClub = wood;
+		if (_clubNum == 1)
+			_currentClub = putter;
+		if (_clubNum == 2)
+			_currentClub = wedge;
+		if (_clubNum == 3)
+			_currentClub = iron;
+		clubText.text = "Club: " + _currentClub.name;
+	}
+
+	private void StopBall()
+	{
+		_rgbd.velocity = Vector3.zero;
+		_rgbd.freezeRotation = true;
+		_hit = false;
+		_canShoot = true;
+		LookAtTarget();
+		arrow.SetActive(true);
+		_canvas.gameObject.SetActive(true);
+		_camera.canMove = false;
+		powerBar.fillAmount = 0;
+		RotateCamera();
+		RotateArrow();
 	}
 
 	private void LookAtTarget()
@@ -101,6 +141,8 @@ public class Ball : MonoBehaviour
 	{
 		_rgbd.AddForce(transform.forward * _forceZ);
 		_rgbd.AddForce(transform.up * _forceY);
+		_shots++;
+		shotsText.text = "Shots: " + _shots;
 		_forceY = 0.0f;
 		_forceZ = 0.0f;
 	}
@@ -175,6 +217,34 @@ public class Ball : MonoBehaviour
 		powerBar.fillAmount = _forceY / forceMaxY;
 	}
 
+	private void BetterBallMeter()
+	{
+		if (_increase && _forceZ <= _currentClub.maxZ)
+		{
+			_forceZ += forceIncrease;
+			Debug.Log("_forceY: " + _forceY);
+			Debug.Log("_forceZ: " + _forceZ);
+		}
+		if (_increase && _forceZ > _currentClub.maxZ)
+		{
+			_increase = false;
+		}
+		if (!_increase && _forceZ >= _currentClub.minZ)
+		{
+			_forceZ -= forceIncrease;
+			Debug.Log("_forceY: " + _forceY);
+			Debug.Log("_forceZ: " + _forceZ);
+		}
+		if (!_increase && _forceZ < _currentClub.minZ)
+		{
+			_increase = true;
+		}
+		float forcePercentage = _forceZ / _currentClub.maxZ;
+		powerBar.fillAmount = forcePercentage;
+		_forceY = _currentClub.maxY * forcePercentage;
+
+	}
+
 	private bool AnyMoveKeyDown()
 	{
 		if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
@@ -201,10 +271,7 @@ public class Ball : MonoBehaviour
 		if (other.gameObject.name == "Terrain")
 			_grounded = true;
 		if (other.gameObject.layer == 4)
-		{
-			Debug.Log("RESET HOLE!!!!!!!!!!!!!!!!!");
 			ResetHole();
-		}
 	}
 
 	private void OnCollisionExit(Collision other)
