@@ -36,6 +36,7 @@ public class FlyCam : MonoBehaviour
 
 		if (ball._hit)
 		{
+			Debug.Log("Ball is hit");
 			if (camY >= 104 && camY <= 160 && camX <= 456 && camX >= 50 && camZ >= 40 && camZ <= 440)
 			{
 				if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
