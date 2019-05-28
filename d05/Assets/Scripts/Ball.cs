@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour
 	public Club wood;
 	public Club wedge;
 	public Club iron;
+	public GameObject tee2;
+	public GameObject tee3;
 	private Club _currentClub;
 	private bool _grounded = true;
 	private bool _increase = true;
@@ -22,7 +24,9 @@ public class Ball : MonoBehaviour
 	private Vector3 _ballPos;
 	private Vector3 _direction;
 	private Vector3 _startPos;
-	private Canvas _canvas;
+	public Canvas _canvas;
+	public Canvas _card;
+	public Canvas _between;
 
 	public bool _hit = false;
 	public float forceIncrease;
@@ -41,7 +45,6 @@ public class Ball : MonoBehaviour
 	{
 		_rgbd = gameObject.GetComponent<Rigidbody>();
 		_camera = GameObject.FindObjectOfType<FlyCam>();
-		_canvas = GameObject.FindObjectOfType<Canvas>();
 		_currentClub = wood;
 		LookAtTarget();
 		_startPos = transform.position;
@@ -69,6 +72,10 @@ public class Ball : MonoBehaviour
 		{
 			NextClub();
 		}
+		if (Input.GetKey(KeyCode.Tab))
+			_card.gameObject.SetActive(true);
+		else
+			_card.gameObject.SetActive(false);
 		if (_canShoot)
 		{
 			if (Input.GetKeyDown(KeyCode.Space))
