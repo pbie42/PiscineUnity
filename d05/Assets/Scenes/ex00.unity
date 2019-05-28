@@ -219,6 +219,7 @@ MonoBehaviour:
   forceMinY: 50
   forceMaxZ: 3000
   forceMinZ: 50
+  _hit: 0
 --- !u!1001 &589887346
 Prefab:
   m_ObjectHideFlags: 0
@@ -424,6 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7aeac138f8b478794a1a7005c1871e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ball: {fileID: 282841054}
   cameraSensitivity: 90
   climbSpeed: 4
   normalMoveSpeed: 50
