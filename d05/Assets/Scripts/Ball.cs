@@ -14,6 +14,7 @@ public class Ball : MonoBehaviour
 	private Vector3 _ballPos;
 	private Vector3 _direction;
 	private Vector3 _startPos;
+	private Canvas _canvas;
 
 	public bool _hit = false;
 	public float forceIncrease;
@@ -30,6 +31,7 @@ public class Ball : MonoBehaviour
 	{
 		_rgbd = gameObject.GetComponent<Rigidbody>();
 		_camera = GameObject.FindObjectOfType<FlyCam>();
+		_canvas = GameObject.FindObjectOfType<Canvas>();
 		LookAtTarget();
 		_startPos = transform.position;
 		_ballPos = _startPos;
@@ -50,6 +52,7 @@ public class Ball : MonoBehaviour
 			_hit = false;
 			LookAtTarget();
 			arrow.SetActive(true);
+			_canvas.gameObject.SetActive(true);
 			_camera.canMove = false;
 			powerBar.fillAmount = 0;
 			RotateCamera();
@@ -59,6 +62,7 @@ public class Ball : MonoBehaviour
 		{
 			_camera.canMove = true;
 			arrow.SetActive(false);
+			_canvas.gameObject.SetActive(false);
 		}
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
@@ -66,6 +70,7 @@ public class Ball : MonoBehaviour
 			{
 				_camera.canMove = false;
 				arrow.SetActive(true);
+				_canvas.gameObject.SetActive(true);
 				RotateCamera();
 			}
 			else if (!_camera.canMove && !_startMeter)
