@@ -18,6 +18,7 @@ public class Ball : MonoBehaviour
 	public float forceMinZ;
 	public bool _hit = false;
 	private bool _grounded = true;
+	private bool _startMeter = false;
 	private Vector3 _startPos;
 
 	// Use this for initialization
@@ -35,7 +36,6 @@ public class Ball : MonoBehaviour
 	void Update()
 	{
 		float zVel = transform.InverseTransformDirection(_rgbd.velocity).z;
-		// Debug.Log("zVel: " + zVel.ToString("F4"));
 		if (_hit && (zVel >= -1 && zVel <= 0 || zVel <= -0.0001))
 		{
 			_rgbd.velocity = Vector3.zero;
@@ -45,29 +45,32 @@ public class Ball : MonoBehaviour
 			transform.LookAt(targetPosition);
 			SetCameraPosition();
 		}
-		if (Input.GetKey(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			BallHit();
+			SetCameraPosition();
+			if (!_startMeter)
+				_startMeter = true;
+			else if (_startMeter)
+				_startMeter = false;
 		}
-		if (Input.GetKeyUp(KeyCode.Space))
+		if (!_startMeter && Input.GetKeyUp(KeyCode.Space))
 		{
+			_startMeter = false;
 			_hit = true;
 			_grounded = false;
 			Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-			// transform.LookAt(targetPosition);
 			_rgbd.AddForce(transform.forward * _forceZ);
 			_rgbd.AddForce(transform.up * _forceY);
 			_forceY = 0.0f;
 			_forceZ = 0.0f;
 		}
 		if (!_hit && _grounded && Input.GetKey(KeyCode.A))
-		{
 			RotateBall(-50f);
-		}
 		if (!_hit && _grounded && Input.GetKey(KeyCode.D))
-		{
 			RotateBall(50f);
-		}
+
+		if (_startMeter)
+			BallMeter();
 	}
 
 	private void RotateBall(float dir)
@@ -91,7 +94,24 @@ public class Ball : MonoBehaviour
 		Debug.Log("_camera.transform.position: " + _camera.transform.position);
 	}
 
-	private void BallHit()
+	private void SetCameraPosition()
+	{
+		Vector3 ballPos = transform.position;
+		float offsetY = 0.0f;
+		while (transform.position.y + offsetY < 104)
+		{
+			offsetY += 1;
+		}
+		while (transform.position.y + offsetY > 104)
+		{
+			offsetY -= 1;
+		}
+		Vector3 offset = _camera.transform.position - ballPos;
+		_camera.transform.position = new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z) + (-transform.forward * 8);
+		_camera.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
+	}
+
+	private void BallMeter()
 	{
 		if (_increase && _forceY <= forceMaxY && _forceZ <= forceMaxZ)
 		{
@@ -121,24 +141,6 @@ public class Ball : MonoBehaviour
 	{
 		_camera.transform.LookAt(transform.position);
 		_camera.transform.Translate(Vector3.right * Time.deltaTime);
-	}
-
-
-	private void SetCameraPosition()
-	{
-		Vector3 ballPos = transform.position;
-		float offsetY = 0.0f;
-		while (transform.position.y + offsetY < 104)
-		{
-			offsetY += 1;
-		}
-		while (transform.position.y + offsetY > 104)
-		{
-			offsetY -= 1;
-		}
-		Vector3 offset = _camera.transform.position - ballPos;
-		_camera.transform.position = new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z) + (-transform.forward * 8);
-		_camera.transform.LookAt(new Vector3(ballPos.x, ballPos.y + offsetY, ballPos.z));
 	}
 
 	private void OnCollisionEnter(Collision other)
