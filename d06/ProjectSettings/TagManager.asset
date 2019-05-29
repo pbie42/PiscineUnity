@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Light
+  - Camera
+  - Fan
+  - SmokeCamera
   layers:
   - Default
   - TransparentFX
