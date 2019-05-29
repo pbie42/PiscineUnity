@@ -8,6 +8,9 @@ TagManager:
   - Camera
   - Fan
   - SmokeCamera
+  - Key
+  - Lock
+  - Document
   layers:
   - Default
   - TransparentFX
