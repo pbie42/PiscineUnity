@@ -38,9 +38,12 @@ public class Maya : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 1000))
 		{
-			Debug.Log("hit: " + hit);
+			Debug.Log("hit: " + hit.point);
 			pos = new Vector3(hit.point.x, hit.point.y, hit.point.z);
 			_navMeshAgent.destination = hit.point;
+			Debug.Log("transform.position: " + transform.position);
+			Debug.Log("_navMeshAgent.destination: " + _navMeshAgent.destination);
+			Debug.Log("_navMeshAgent.remainingDistance: " + _navMeshAgent.remainingDistance);
 			// _attack = false;
 			_running = true;
 		}
@@ -48,18 +51,20 @@ public class Maya : MonoBehaviour
 
 	private void MoveToPosition()
 	{
+		Quaternion newRotation = Quaternion.LookRotation(pos - transform.position, Vector3.forward);
+		newRotation.x = 0f;
+		newRotation.z = 0f;
+		transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * speed);
 		if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
 		{
+			Debug.Log("Stopping");
 			_running = false;
 			_navMeshAgent.velocity = Vector3.zero;
-			_navMeshAgent.destination = transform.position;
+			_navMeshAgent.isStopped = true;
 		}
 		else
 		{
-			Quaternion newRotation = Quaternion.LookRotation(pos - transform.position, Vector3.forward);
-			newRotation.x = 0f;
-			newRotation.z = 0f;
-			transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 10);
+			_navMeshAgent.velocity = Vector3.zero;
 			_running = true;
 			Debug.Log("_navMeshAgent.remainingDistance: " + _navMeshAgent.remainingDistance);
 		}
@@ -69,31 +74,3 @@ public class Maya : MonoBehaviour
 	}
 
 }
-
-// if (!_dead)
-// {
-// 	if (Input.GetMouseButton(0))
-// 	{
-// 		if (Physics.Raycast(ray, out hit, 100))
-// 		{
-// 			Debug.Log("hit: " + hit);
-// 			_navMeshAgent.destination = hit.point;
-// 			// _attack = false;
-// 			_running = true;
-// 		}
-// 	}
-// 	if (Input.GetMouseButtonDown(1))
-// 	{
-// 		// _dead = true;
-// 		_attack = true;
-// 		// _running = false;
-// 		// _navMeshAgent.ResetPath();
-// 		// _navMeshAgent.destination = transform.position;
-// 		// _animator.SetBool("Running", _running);
-// 		// _animator.SetBool("Dead", _dead);
-// 		// _animator.SetBool("Attack", _attack);
-// 		// _navMeshAgent.isStopped = true; // keeps sliding
-// 	}
-
-
-// }
