@@ -197,6 +197,44 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 35471980}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &121309034 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100164, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+  m_PrefabInternal: {fileID: 1103448971}
+--- !u!23 &121309035
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 121309034}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 80ab84ae23bc33941ad465673fbb8c66, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &361845933 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100070, guid: 6a05499940f38404e9a586d0304429e8, type: 3}
@@ -212,6 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8b640a5dd704d2c8a0c82f5d188585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
+  controller: {fileID: 0}
 --- !u!195 &361845935
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -221,15 +261,15 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 5
   m_Acceleration: 12
   avoidancePriority: 50
-  m_AngularSpeed: 2500
-  m_StoppingDistance: 1.2
+  m_AngularSpeed: 3000
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -402,7 +442,7 @@ Transform:
   - {fileID: 1885681354}
   - {fileID: 1068499356}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509828855
 GameObject:
@@ -467,7 +507,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &788545326
 GameObject:
@@ -587,6 +627,80 @@ Transform:
   m_Father: {fileID: 412870331}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1103448971
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 122.267914
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 114.99725
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 114.926994
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400160, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000054849346
+      objectReference: {fileID: 0}
+    - target: {fileID: 400160, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.24791953
+      objectReference: {fileID: 0}
+    - target: {fileID: 400160, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.566137
+      objectReference: {fileID: 0}
+    - target: {fileID: 400160, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.78614557
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 400166, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8ae02e7cc0f24400d8805dae14f03d81, type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: edb27a59002a0b743af33db7e327ffe7, type: 3}
+  m_IsPrefabParent: 0
 --- !u!1 &1367961661
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +781,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 43.83, y: 27.42, z: 0}
 --- !u!114 &1367961666
 MonoBehaviour:
